@@ -86,7 +86,6 @@ namespace TextRPG_8_Team
                     Console.WriteLine($"- {item}");
                 }
             }
-
             Console.WriteLine("========================\n");
             Console.Write("메인 메뉴로 돌아가려면 0을 입력 : ");
 
