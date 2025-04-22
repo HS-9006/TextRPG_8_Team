@@ -15,7 +15,16 @@ namespace TextRPG_8_Team
 
     public class Player
     {
-        //Player player = new Player();
+        //싱글톤
+        public static Player instance;
+        public static Player Instance()
+        {
+            if(instance == null)
+            {
+                instance = new Player();
+            }
+            return instance;
+        }
         public string Name;
         public JobType Job = JobType.Warrior;
         public int Level = 1;
@@ -61,27 +70,27 @@ namespace TextRPG_8_Team
             CurrentHP = MaxHP;
         }
 
-        public void PlayerStat(Player player)
+        public void PlayerStat()
         {
             Console.WriteLine("\n===== 캐릭터 정보 =====");
-            Console.WriteLine($"이름: {player.Name}");
-            Console.WriteLine($"직업: {player.Job}");
-            Console.WriteLine($"레벨: {player.Level}");
+            Console.WriteLine($"이름: {Player.instance.Name}");
+            Console.WriteLine($"직업: {Player.instance.Job}");
+            Console.WriteLine($"레벨: {Player.instance.Level}");
 
-            Console.WriteLine($"공격력: {player.BaseAttack} (+{player.BonusAttack}) => {player.TotalAttack}");
-            Console.WriteLine($"방어력: {player.BaseDefense} (+{player.BonusDefense}) => {player.TotalDefense}");
+            Console.WriteLine($"공격력: {Player.instance.BaseAttack} (+{Player.instance.BonusAttack}) => {Player.instance.TotalAttack}");
+            Console.WriteLine($"방어력: {Player.instance.BaseDefense} (+{Player.instance.BonusDefense}) => {Player.instance.TotalDefense}");
 
-            Console.WriteLine($"체력: {player.CurrentHP} / {player.TotalMaxHP}");
-            Console.WriteLine($"Gold: {player.Gold}");
+            Console.WriteLine($"체력: {Player.instance.CurrentHP} / {Player.instance.TotalMaxHP}");
+            Console.WriteLine($"Gold: {Player.instance.Gold}");
 
             Console.WriteLine("\n[장착 중인 아이템]");
-            if (player.EquippedItems.Count == 0)
+            if (Player.instance.EquippedItems.Count == 0)
             {
                 Console.WriteLine("없음");
             }
             else
             {
-                foreach (var item in player.EquippedItems)
+                foreach (var item in Player.instance.EquippedItems)
                 {
                     Console.WriteLine($"- {item}");
                 }

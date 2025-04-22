@@ -11,7 +11,7 @@ namespace TextRPG_8_Team
     internal class StartPage
     {
         //시작 화면
-        public void StartGame(Player _player)
+        public void StartGame()
         {
             bool isGameEnd = false;
 
@@ -48,12 +48,12 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case StartChoice.Status:
-                        _player.PlayerStat(_player);
+                        Player.instance.PlayerStat(Player.instance);
                         break;
                     case StartChoice.Battle:
                         break;
                     case StartChoice.Inventory:
-                        InventorySystem.ShowInventory(_player);
+                        InventorySystem.ShowInventory(Player.instance);
                         break;
                     case StartChoice.GameEnd:
                         isGameEnd = true;
