@@ -1,6 +1,6 @@
 ﻿using System;
-using TextRPG_8Team;
-namespace TextRPG_8Team
+namespace TextRPG_8_Team
+
 {
     public class Monster
     {
