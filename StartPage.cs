@@ -37,8 +37,8 @@ namespace TextRPG_8_Team
                     Thread.Sleep(500);
                     continue;
                 }
-                //1~5의 값이 아니라면 실행
-                if (choiceNum > 5 || choiceNum < 1)
+                //1~4의 값이 아니라면 실행
+                if (choiceNum > 4 || choiceNum < 1)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                     Thread.Sleep(500);
