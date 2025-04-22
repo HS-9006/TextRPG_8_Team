@@ -15,12 +15,14 @@ namespace TextRPG_8_Team
         {
             bool isGameEnd = false;
 
+            SettingName();
+
             while (true)
             {
                 if (isGameEnd) break;
 
                 Console.Clear();
-                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.\n");
+                Console.WriteLine("이제 전투를 시작할 수 있습니다.\n");
                 Console.WriteLine("1. 상태 보기\n2. 전투 시작\n3. 인벤토리\n4. 상점\n5. 게임 종료\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
@@ -79,6 +81,29 @@ namespace TextRPG_8_Team
             Shop,
             GameEnd,
             //Guild
+        }
+
+        public void SettingName()
+        {
+            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이름을 입력해주세요.\n");
+            Console.Write(">>");
+
+            while(true)
+            {
+                string? inputName = Console.ReadLine();
+
+                if (inputName == null)
+                {
+                    Console.WriteLine("잘못입력하셨습니다 다시 입력하세요");
+                    continue;
+                }
+
+                Player.Instance().Name = inputName;
+
+                Console.WriteLine($"환영합니다. {Player.Instance().Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
+                Console.ReadLine();
+                break;
+            }
         }
     }
 }
