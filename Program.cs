@@ -1,9 +1,11 @@
-﻿namespace TextRPG_8_Team;
-
-class Program
+﻿namespace TextRPG_8_Team
 {
-    static void Main(string[] args)
+    internal class Program
     {
-        Console.WriteLine("Hello, World!");
+        static StartPage StartPage = new StartPage();
+        static void Main(string[] args)
+        {
+            StartPage.StartGame();
+        }
     }
 }
