@@ -77,6 +77,7 @@ namespace TextRPG_8_Team
             if (player.Inventory.Count == 0)
             {
                 Console.WriteLine("장착할 아이템이 없습니다.");
+                Thread.Sleep(500);
                 return;
             }
             //인벤토리에 장비가 있으면 숫자와 함께 출력
@@ -87,6 +88,7 @@ namespace TextRPG_8_Team
                 if (index < 1 || index > player.Inventory.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
+                    Thread.Sleep(500);
                     return;
                 }
                 //유저가 입력한 값 - 1 을 해야 리스트 순서에 맞출 수 있음
@@ -96,6 +98,7 @@ namespace TextRPG_8_Team
                 //인벤토리에서 개수 -1
                 player.Inventory.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 장착했습니다.");
+                Thread.Sleep(500);
             }
             else
             {
@@ -123,6 +126,7 @@ namespace TextRPG_8_Team
                 if (index < 1 || index > player.EquippedItems.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
+                    Thread.Sleep(500);
                     return;
                 }
 
@@ -130,10 +134,12 @@ namespace TextRPG_8_Team
                 player.Inventory.Add(item);
                 player.EquippedItems.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 해제했습니다.");
+                Thread.Sleep(500);
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
+                Thread.Sleep(500);
             }
         }
     }

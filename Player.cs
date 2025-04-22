@@ -15,7 +15,7 @@ namespace TextRPG_8_Team
 
     public class Player
     {
-        Player player = new Player();
+        //Player player = new Player();
         public string Name;
         public JobType Job = JobType.Warrior;
         public int Level = 1;
@@ -61,7 +61,7 @@ namespace TextRPG_8_Team
             CurrentHP = MaxHP;
         }
 
-        public void PlayerStat()
+        public void PlayerStat(Player player)
         {
             Console.WriteLine("\n===== 캐릭터 정보 =====");
             Console.WriteLine($"이름: {player.Name}");
@@ -86,7 +86,6 @@ namespace TextRPG_8_Team
                     Console.WriteLine($"- {item}");
                 }
             }
-
             Console.WriteLine("========================\n");
             Console.Write("메인 메뉴로 돌아가려면 0을 입력 : ");
 
