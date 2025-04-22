@@ -59,7 +59,7 @@ namespace TextRPG_8_Team
                         isGameEnd = true;
                         break;
                     case StartChoice.Shop:
-                        Shop.OpenShop(_player);
+                        Shop.OpenShop(Player.instance);
                         break;
                     //case StartChoice.Guild:
                     //break;

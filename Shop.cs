@@ -20,7 +20,7 @@ namespace TextRPG_8_Team
                 new Item("마법사의 지팡이", 20, 0, 10 , 2100)
         };
 
-        public static void OpenShop(Player player)
+        public static void OpenShop()
         {
             while (true)
             {
@@ -34,10 +34,10 @@ namespace TextRPG_8_Team
                 switch (input)
                 {
                     case "1":
-                        BuyItem(player);
+                        BuyItem();
                         break;
                     case "2":
-                        SellItem(player);
+                        SellItem();
                         break;
                     case "0":
                         Console.WriteLine("상점을 나갑니다.\n");
@@ -48,7 +48,7 @@ namespace TextRPG_8_Team
                 }
             }
         }
-        static void BuyItem(Player player)
+        static void BuyItem()
         {
             Console.WriteLine("\n===== 상점 아이템 목록 =====");
             for (int i = 0; i < shopItems.Count; i++)
@@ -56,7 +56,7 @@ namespace TextRPG_8_Team
                 Console.WriteLine($"{i + 1}) {shopItems[i]}");
             }
 
-            Console.WriteLine($"보유 Gold: {player.Gold}");
+            Console.WriteLine($"보유 Gold: {Player.instance.Gold}");
             Console.Write("구매할 아이템 번호 입력 (0: 취소): ");
 
             if (int.TryParse(Console.ReadLine(), out int index))
@@ -71,10 +71,10 @@ namespace TextRPG_8_Team
                 }
 
                 Item selected = shopItems[index - 1];
-                if (player.Gold >= selected.Price)
+                if (Player.instance.Gold >= selected.Price)
                 {
-                    player.Gold -= selected.Price;
-                    player.Inventory.Add(selected);
+                    Player.instance.Gold -= selected.Price;
+                    Player.instance.Inventory.Add(selected);
                     Console.WriteLine($"{selected.Name}을(를) 구매했습니다.");
                 }
                 else
@@ -87,18 +87,18 @@ namespace TextRPG_8_Team
                 Console.WriteLine("숫자를 입력해주세요.");
             }
         }
-        static void SellItem(Player player)
+        static void SellItem()
         {
-            if (player.Inventory.Count == 0)
+            if (Player.instance.Inventory.Count == 0)
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
                 return;
             }
 
             Console.WriteLine("\n===== 판매 가능한 아이템 =====");
-            for (int i = 0; i < player.Inventory.Count; i++)
+            for (int i = 0; i < Player.instance.Inventory.Count; i++)
             {
-                Item item = player.Inventory[i];
+                Item item = Player.instance.Inventory[i];
                 Console.WriteLine($"{i + 1}) {item} (판매가: {item.Price / 2}G)");
             }
 
@@ -108,15 +108,15 @@ namespace TextRPG_8_Team
                 if (index == 0)
                     return;
 
-                if (index < 1 || index > player.Inventory.Count)
+                if (index < 1 || index > Player.instance.Inventory.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
                     return;
                 }
 
-                Item item = player.Inventory[index - 1];
-                player.Gold += item.Price / 2;
-                player.Inventory.RemoveAt(index - 1);
+                Item item = Player.instance.Inventory[index - 1];
+                Player.instance.Gold += item.Price / 2;
+                Player.instance.Inventory.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 판매했습니다. {item.Price / 2}G 획득!");
             }
             else
