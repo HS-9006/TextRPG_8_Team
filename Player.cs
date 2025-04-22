@@ -15,7 +15,16 @@ namespace TextRPG_8_Team
 
     public class Player
     {
-        //Player player = new Player();
+        //싱글톤
+        public static Player player;
+        public static Player Instance()
+        {
+            if(Instance == null)
+            {
+                player = new Player();
+            }
+            return player;
+        }
         public string Name;
         public JobType Job = JobType.Warrior;
         public int Level = 1;
