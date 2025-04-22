@@ -21,7 +21,7 @@ namespace TextRPG_8_Team
 
                 Console.Clear();
                 Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이제 전투를 시작할 수 있습니다.\n");
-                Console.WriteLine("1. 상태 보기\n2. 전투 시작\n3. 인벤토리\n4. 게임 종료\n");
+                Console.WriteLine("1. 상태 보기\n2. 전투 시작\n3. 인벤토리\n4. 상점\n5. 게임 종료\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
@@ -35,8 +35,8 @@ namespace TextRPG_8_Team
                     Thread.Sleep(500);
                     continue;
                 }
-                //1~3의 값이 아니라면 실행
-                if (choiceNum > 3 || choiceNum < 1)
+                //1~5의 값이 아니라면 실행
+                if (choiceNum > 5 || choiceNum < 1)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                     Thread.Sleep(500);
@@ -58,8 +58,11 @@ namespace TextRPG_8_Team
                     case StartChoice.GameEnd:
                         isGameEnd = true;
                         break;
+                    case StartChoice.Shop:
+                        Shop.OpenShop(_player);
+                        break;
                     //case StartChoice.Guild:
-                        //break;
+                    //break;
                     default:
                         break;
                 }
@@ -73,6 +76,7 @@ namespace TextRPG_8_Team
             Status = 1,
             Battle,
             Inventory,
+            Shop,
             GameEnd,
             //Guild
         }
