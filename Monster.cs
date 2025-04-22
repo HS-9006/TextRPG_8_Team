@@ -13,42 +13,37 @@ namespace TextRPG_8Team
         public int exp { get; set; }
         public int gold { get; set; }
         public bool isAlive => health > 0;
-
-
     }
 }
-
-    public class Ssalsoong : Monster
+public class Ssalsoong : Monster
 {
-        public Ssalsoong()
-        {
-            name = "쌀숭이";
-            level = 1;
-            health = 30;
-            attack = 10;
-            def = 5;
-            speed = 15;
-            exp = 10;
-            gold = 5;
-        }
-    }
-
-    public class Reshoongjwak : Monster
+    public Ssalsoong()
     {
-        public Reshoongjwak()
-        {
-            name = "리슝좍";
-            level = 2;
-            health = 35;
-            attack = 15;
-            def = 7;
-            speed = 20;
-            exp = 15;
-            gold = 10;
-        }
+        name = "쌀숭이";
+        level = 1;
+        health = 30;
+        attack = 10;
+        def = 5;
+        speed = 15;
+        exp = 10;
+        gold = 5;
     }
-
-    public class Gongjungwi : Monster
+}
+public class Reshoongjwak : Monster
+{
+    public Reshoongjwak()
+    {
+        name = "리슝좍";
+        level = 2;
+        health = 35;
+        attack = 15;
+        def = 7;
+        speed = 20;
+        exp = 15;
+        gold = 10;
+    }
+}
+public class Gongjungwi : Monster
 {
     public Gongjungwi()
     {
