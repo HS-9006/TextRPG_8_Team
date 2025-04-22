@@ -48,7 +48,7 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case StartChoice.Status:
-                        Player.instance.PlayerStat();
+                        Player.Instance().PlayerStat();
                         break;
                     case StartChoice.Battle:
                         break;

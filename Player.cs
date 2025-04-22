@@ -73,15 +73,15 @@ namespace TextRPG_8_Team
         public void PlayerStat()
         {
             Console.WriteLine("\n===== 캐릭터 정보 =====");
-            Console.WriteLine($"이름: {Player.instance.Name}");
-            Console.WriteLine($"직업: {Player.instance.Job}");
-            Console.WriteLine($"레벨: {Player.instance.Level}");
+            Console.WriteLine($"이름: {Player.Instance().Name}");
+            Console.WriteLine($"직업: {Player.Instance().Job}");
+            Console.WriteLine($"레벨: {Player.Instance().Level}");
 
-            Console.WriteLine($"공격력: {Player.instance.BaseAttack} (+{Player.instance.BonusAttack}) => {Player.instance.TotalAttack}");
-            Console.WriteLine($"방어력: {Player.instance.BaseDefense} (+{Player.instance.BonusDefense}) => {Player.instance.TotalDefense}");
+            Console.WriteLine($"공격력: {Player.Instance().BaseAttack} (+{Player.Instance().BonusAttack}) => {Player.Instance().TotalAttack}");
+            Console.WriteLine($"방어력: {Player.Instance().BaseDefense} (+{Player.Instance().BonusDefense}) => {Player.Instance().TotalDefense}");
 
-            Console.WriteLine($"체력: {Player.instance.CurrentHP} / {Player.instance.TotalMaxHP}");
-            Console.WriteLine($"Gold: {Player.instance.Gold}");
+            Console.WriteLine($"체력: {Player.Instance().CurrentHP} / {Player.Instance().TotalMaxHP}");
+            Console.WriteLine($"Gold: {Player.Instance().Gold}");
 
             Console.WriteLine("\n[장착 중인 아이템]");
             if (Player.instance.EquippedItems.Count == 0)
