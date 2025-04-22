@@ -19,7 +19,7 @@ namespace TextRPG_8_Team
             List<Monster> monster = RandomMonsters();
 
             // 2. 내 정보 출력
-            player.PlayerStat();
+            player.PlayerStat(player);
 
             // 3. 몬스터 출력
             for(int i = 0; i < monster.Count; i++)
@@ -74,7 +74,19 @@ namespace TextRPG_8_Team
             for (int i = 0; i < count; i++)
             {
                 int idx = rand.Next(names.Length);
-                monsterList.Add(new Monster(names[idx], levels[idx], hps[idx], attacks[idx], defs[idx], speed[idx], exp[idx], gold[idx] ));
+
+                Monster m = new Monster();
+                m.name = names[idx];
+                m.level = levels[idx];
+                m.health = hps[idx];
+                m.attack = attacks[idx];
+                m.def = defs[idx];
+                m.speed = speed[idx];
+                m.exp = exp[idx];
+                m.gold = gold[idx];
+
+                monsterList.Add(m);
+                //monsterList.Add(new Monster(names[idx], levels[idx], hps[idx], attacks[idx], defs[idx], speed[idx], exp[idx], gold[idx] ));
             }
 
             return monsterList;
