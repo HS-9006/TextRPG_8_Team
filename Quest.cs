@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TextRPG_8_Team
 {
     internal class Quest
     {
-        public static Quest instance;
+        public static Quest? instance;
+        public static KillMonster killMonster = new KillMonster();
 
         //싱글톤
         public static Quest Instance()
@@ -44,6 +46,7 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case qeustChoice.KillMonster:
+                        killMonster.KillMonsterStart();
                         break;
                     case qeustChoice.Equipped:
                         break;
@@ -54,7 +57,6 @@ namespace TextRPG_8_Team
                 }
             }
         }
-
         enum qeustChoice
         {
             KillMonster = 1,
@@ -64,10 +66,42 @@ namespace TextRPG_8_Team
     }
     class KillMonster
     {
+        bool isKillMonster = false;
+        int killCount = 0;
         public void KillMonsterStart()
         {
             while (true)
             {
+                if (isKillMonster || killCount >= 5)
+                {
+                    Console.Clear();
+                    Console.WriteLine("아이고 정말 고맙네\n눈에 띄게 몬스터가 줄었어\n");
+
+                    Console.WriteLine("- 몬스터 5마리 처치 Claer\n");
+
+                    Console.WriteLine("- 보상 - \n\t쓸만한 방패 x 1\n\t5G");
+
+                    Console.WriteLine("1. 보상 받기\n2. 나가기");
+                    Console.WriteLine("원하는 행동을 입력하세요.\n>>");
+
+                    bool isNumKill = int.TryParse(Console.ReadLine(), out int choiceNumKill);
+
+                    if (!isNumKill || (choiceNumKill > 2 || choiceNumKill < 1))
+                    {
+                        Console.WriteLine("잘못입력하셨습니다.");
+                        Thread.Sleep(500);
+                        continue;
+                    }
+                    else if (choiceNumKill == 1)
+                    {
+                        Player.instance.Inventory.Add(new Item("쓸만한 방패", 0, 10, 0, 10));
+                        isKillMonster = false;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 Console.Clear();
                 Console.WriteLine("이봐! 마을 근처에 몬스터들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!\n");
 
@@ -88,9 +122,25 @@ namespace TextRPG_8_Team
                 }
                 else if (choiceNum == 1)
                 {
-                    Player.Instance().Inventory.Add(new Item());
+                    if (isKillMonster == false)
+                    {
+                        isKillMonster = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("이미 수락하셨습니다,");
+                    }
+                    break;
+                }
+                else
+                {
+                    break;
                 }
             }
+        }
+        public void killCountUp()
+        {
+           if(killCount<5 && isKillMonster) killCount++;
         }
     }
 }
