@@ -48,11 +48,12 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case StartChoice.Status:
-                        _player.PlayerStat();
+                        _player.PlayerStat(_player);
                         break;
                     case StartChoice.Battle:
                         break;
                     case StartChoice.Inventory:
+                        InventorySystem.ShowInventory(_player);
                         break;
                     case StartChoice.GameEnd:
                         isGameEnd = true;
