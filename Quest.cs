@@ -8,16 +8,16 @@ namespace TextRPG_8_Team
 {
     internal class Quest
     {
-        public static Quest quest;
+        public static Quest instance;
 
         //싱글톤
         public static Quest Instance()
         {
-            if (quest == null)
+            if (instance == null)
             {
-                quest = new Quest();
+                instance = new Quest();
             }
-            return quest;
+            return instance;
         }
 
         public void GulidQuest()
