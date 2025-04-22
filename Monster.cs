@@ -1,4 +1,5 @@
 ﻿using System;
+using TextRPG_8Team;
 namespace TextRPG_8Team
 {
     public class Monster
@@ -18,7 +19,7 @@ namespace TextRPG_8Team
 }
 
     public class Ssalsoong : Monster
-    {
+{
         public Ssalsoong()
         {
             name = "쌀숭이";
@@ -61,5 +62,4 @@ namespace TextRPG_8Team
         gold = 100;
 
     }
-}
 }
