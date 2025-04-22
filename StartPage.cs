@@ -53,13 +53,13 @@ namespace TextRPG_8_Team
                     case StartChoice.Battle:
                         break;
                     case StartChoice.Inventory:
-                        InventorySystem.ShowInventory(Player.instance);
+                        InventorySystem.ShowInventory();
                         break;
                     case StartChoice.GameEnd:
                         isGameEnd = true;
                         break;
                     case StartChoice.Shop:
-                        Shop.OpenShop(Player.instance);
+                        Shop.OpenShop();
                         break;
                     //case StartChoice.Guild:
                     //break;
