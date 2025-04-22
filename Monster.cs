@@ -1,6 +1,5 @@
 ﻿using System;
 namespace TextRPG_8_Team
-
 {
     public class Monster
     {
