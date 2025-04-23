@@ -37,7 +37,7 @@ public class BattleManager
             }
             Console.ResetColor();
             Console.WriteLine("\n[내 정보]");
-            Console.WriteLine($"Lv.{player.level} Chad{player.job}");
+            Console.WriteLine($"Lv.{player.Level} Chad{player.Job}");
             Console.WriteLine($"HP {player.CurrentHP}/{player.MaxHP}");
             Console.WriteLine("\n0. 취소");
             Console.WriteLine("\n대상을 선택해주세요");
@@ -83,7 +83,7 @@ public class BattleManager
         Console.Clear();
         Console.WriteLine("Battle!!\n");
 
-        Console.WriteLine($"{player.name}의 공격!");
+        Console.WriteLine($"{player.Name}의 공격!");
         Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
         Console.WriteLine($"HP {monster.health} -> {(monster.health <= 0 ? "Dead" : monster.health)}\n");
@@ -109,8 +109,8 @@ public class BattleManager
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{player.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
-            Console.WriteLine($"Lv.{player.level} {player.name}");
+            Console.WriteLine($"{player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP. {player.TotalMaxHP} -> {player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
             Console.WriteLine("대상을 선택해주세요.");
@@ -140,7 +140,7 @@ public class PlayerAttack : IAttack
     }
     public int Attack(Player player, Monster monster)
     {
-        int damage = calculator.Calculate(player.Totalattack, monster.def);
+        int damage = calculator.Calculate(player.TotalAttack, monster.def);
         monster.health -= damage;
 
         return damage;
