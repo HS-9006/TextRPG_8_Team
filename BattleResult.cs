@@ -67,10 +67,10 @@ namespace TextRPG_8_Team
         public static void BattleResultInit(List<Monster> monsters)
         {
             int totalGold = monsters.Where(m => !m.isAlive).Sum(m => m.gold);
-            GameManager.Instance().player.Gold += totalGold;
+            GameManager.Instance.player.Gold += totalGold;
 
             Console.WriteLine($"\n획득한 골드: {totalGold} G");
-            Console.WriteLine($"현재 보유 골드: {GameManager.Instance().player.Gold} G");
+            Console.WriteLine($"현재 보유 골드: {GameManager.Instance.player.Gold} G");
 
             Console.WriteLine("\n0. 다음\n>> ");
             while (true)
