@@ -20,9 +20,9 @@ namespace TextRPG_8_Team
         {
             name = "쌀숭이";
             level = 1;
-            health = 30;
-            attack = 10;
-            def = 5;
+            health = 10;
+            attack = 5;
+            def = 3;
             speed = 15;
             exp = 10;
             gold = 5;
@@ -34,9 +34,9 @@ namespace TextRPG_8_Team
         {
             name = "리슝좍";
             level = 2;
-            health = 35;
-            attack = 15;
-            def = 7;
+            health = 15;
+            attack = 10;
+            def = 5;
             speed = 20;
             exp = 15;
             gold = 10;
@@ -48,9 +48,9 @@ namespace TextRPG_8_Team
         {
             name = "공정위";
             level = 5;
-            health = 50;
-            attack = 30;
-            def = 14;
+            health = 20;
+            attack = 15;
+            def = 7;
             speed = 25;
             exp = 40;
             gold = 100;
