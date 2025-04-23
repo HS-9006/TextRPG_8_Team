@@ -7,8 +7,8 @@ public class BattleManager
 {
     public void Battle(List<Monster> monsters)
     {
-        int beforeHp = GameManager.Instance().player.CurrentHP;
-        while (GameManager.Instance().player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
+        int beforeHp = GameManager.Instance.player.CurrentHP;
+        while (GameManager.Instance.player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
         {
             PlayerTurn(monsters);
             MonsterTurn(monsters);
@@ -17,7 +17,7 @@ public class BattleManager
         {
             BattleResult.BattleResultMenu(true, monsters);
         }
-        else if (GameManager.Instance().player.CurrentHP <= 0)
+        else if (GameManager.Instance.player.CurrentHP <= 0)
         {
             BattleResult.BattleResultMenu(false, monsters);
         }
@@ -38,8 +38,8 @@ public class BattleManager
             }
             Console.ResetColor();
             Console.WriteLine("\n[내 정보]");
-            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
-            Console.WriteLine($"HP {GameManager.Instance().player.CurrentHP}/{GameManager.Instance().player.MaxHP}");
+            Console.WriteLine($"Lv.{GameManager.Instance.player.Level} Chad{GameManager.Instance.player.Job}");
+            Console.WriteLine($"HP {GameManager.Instance.player.CurrentHP}/{GameManager.Instance.player.MaxHP}");
             Console.WriteLine("\n0. 취소");
             Console.WriteLine("\n대상을 선택해주세요");
             Console.WriteLine(">>");
@@ -84,7 +84,7 @@ public class BattleManager
 
         Console.Clear();
         Console.WriteLine("Battle!!\n");
-        Console.WriteLine($"{GameManager.Instance().player.Name}의 공격!");
+        Console.WriteLine($"{GameManager.Instance.player.Name}의 공격!");
         Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]  {(isCritical ? "- 치명타 공격!!" : "")}\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
         Console.WriteLine($"HP {beforeHp} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
@@ -110,9 +110,9 @@ public class BattleManager
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
-            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} {GameManager.Instance().player.Name}");
-            Console.WriteLine($"HP. {GameManager.Instance().player.TotalMaxHP} -> {GameManager.Instance().player.CurrentHP}\n");
+            Console.WriteLine($"{GameManager.Instance.player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+            Console.WriteLine($"Lv.{GameManager.Instance.player.Level} {GameManager.Instance.player.Name}");
+            Console.WriteLine($"HP. {GameManager.Instance.player.TotalMaxHP} -> {GameManager.Instance.player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.WriteLine(">>");
@@ -141,7 +141,7 @@ public class PlayerAttack : IAttack
     }
     public (int damage, bool isCritical) Attack(Monster monster)
     {
-        var (damage, isCritical) = calculator.Calculate(GameManager.Instance().player.TotalAttack, monster.def);
+        var (damage, isCritical) = calculator.Calculate(GameManager.Instance.player.TotalAttack, monster.def);
         monster.health -= damage;
 
         return (damage, isCritical);
@@ -159,9 +159,9 @@ public class MonsterAttack : IAttack
 
     public (int damage, bool isCritical) Attack(Monster monster)
     {
-        var (damage, isCritical) = calculator.Calculate(monster.attack, GameManager.Instance().player.TotalDefense);
-        GameManager.Instance().player.CurrentHP -= damage;
-        if (GameManager.Instance().player.CurrentHP < 0) GameManager.Instance().player.CurrentHP = 0;
+        var (damage, isCritical) = calculator.Calculate(monster.attack, GameManager.Instance.player.TotalDefense);
+        GameManager.Instance.player.CurrentHP -= damage;
+        if (GameManager.Instance.player.CurrentHP < 0) GameManager.Instance.player.CurrentHP = 0;
 
         return (damage, false);
     }
