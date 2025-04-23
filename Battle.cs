@@ -14,44 +14,12 @@ public class BattleManager
             MonsterTurn(monsters);
         }
         if (monsters.All(m => m.health <= 0))
-
         {
-            Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
-            Console.WriteLine("Victory\n");
-            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
-            Console.WriteLine($"HP {beforeHp} -> {GameManager.Instance().player.CurrentHP}\n");
-            Console.WriteLine("0. 다음\n");
-            Console.WriteLine(">>");
-            while (true)
-            {
-                bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
-                if (isSelectedMenu && index == 0) break;
-
-                Console.WriteLine("잘못된 입력입니다.");
-            }
-            //전투종료
+            BattleResult.BattleResultMenu(false, monsters);
         }
         else if (GameManager.Instance().player.CurrentHP <= 0)
         {
-            Console.Clear();
-            Console.WriteLine("Battle!! - Result\n");
-            Console.WriteLine("You Lose\n");
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
-            Console.WriteLine($"HP {beforeHp} -> {GameManager.Instance().player.CurrentHP}\n");
-            Console.WriteLine("0. 다음\n");
-            Console.WriteLine(">>");
-            while (true)
-            {
-                bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
-                if (isSelectedMenu && index == 0) break;
-
-                Console.WriteLine("잘못된 입력입니다.");
-            }
-            //전투종료
+            BattleResult.BattleResultMenu(true, monsters);
         }
     }
     public void PlayerTurn(List<Monster> monsters)
