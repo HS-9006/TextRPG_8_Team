@@ -15,11 +15,11 @@ public class BattleManager
         }
         if (monsters.All(m => m.health <= 0))
         {
-            BattleResult.BattleResultMenu(false, monsters);
+            BattleResult.BattleResultMenu(true, monsters);
         }
         else if (GameManager.Instance().player.CurrentHP <= 0)
         {
-            BattleResult.BattleResultMenu(true, monsters);
+            BattleResult.BattleResultMenu(false, monsters);
         }
     }
     public void PlayerTurn(List<Monster> monsters)
