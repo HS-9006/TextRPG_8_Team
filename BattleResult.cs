@@ -66,9 +66,19 @@ namespace TextRPG_8_Team
         }
         public static void BattleResultInit(List<Monster> monsters)
         {
-            foreach (Monster m in monsters)
-            {
+            int totalGold = monsters.Where(m => !m.isAlive).Sum(m => m.gold);
+            GameManager.Instance().player.Gold += totalGold;
 
+            Console.WriteLine($"\n획득한 골드: {totalGold} G");
+            Console.WriteLine($"현재 보유 골드: {GameManager.Instance().player.Gold} G");
+
+            Console.WriteLine("\n0. 다음\n>> ");
+            while (true)
+            {
+                bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+                if (isChoiceNum && choiceNum == 0) break;
+
+                Console.WriteLine("잘못된 입력입니다");
             }
         }
 

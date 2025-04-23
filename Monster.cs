@@ -25,7 +25,7 @@ namespace TextRPG_8_Team
             def = 3;
             speed = 15;
             exp = 10;
-            gold = 5;
+            gold = 1000;
         }
     }
     public class Reshoongjwak : Monster
@@ -39,7 +39,7 @@ namespace TextRPG_8_Team
             def = 5;
             speed = 20;
             exp = 15;
-            gold = 10;
+            gold = 2000;
         }
     }
     public class Gongjungwi : Monster
@@ -53,7 +53,7 @@ namespace TextRPG_8_Team
             def = 7;
             speed = 25;
             exp = 40;
-            gold = 100;
+            gold = 10000;
 
         }
     }
