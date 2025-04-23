@@ -37,8 +37,8 @@ namespace TextRPG_8_Team
                     Thread.Sleep(500);
                     continue;
                 }
-                //1~4의 값이 아니라면 실행
-                if (choiceNum > 4 || choiceNum < 1)
+                //1~5의 값이 아니라면 실행
+                if (choiceNum > 5 || choiceNum < 1)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                     Thread.Sleep(500);
@@ -50,18 +50,20 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case StartChoice.Status:
-                        Player.Instance().PlayerStat();
+                        GameManager.Instance().player.PlayerStat();
                         break;
                     case StartChoice.Battle:
+                        StartBattle startBattle = new StartBattle();
+                        startBattle.start();
                         break;
                     case StartChoice.Inventory:
                         InventorySystem.ShowInventory();
                         break;
-                    case StartChoice.GameEnd:
-                        isGameEnd = true;
-                        break;
                     case StartChoice.Shop:
                         Shop.OpenShop();
+                        break;
+                    case StartChoice.GameEnd:
+                        isGameEnd = true;
                         break;
                     //case StartChoice.Guild:
                     //break;
@@ -88,7 +90,7 @@ namespace TextRPG_8_Team
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n이름을 입력해주세요.\n");
             Console.Write(">>");
 
-            while(true)
+            while (true)
             {
                 string? inputName = Console.ReadLine();
 
@@ -98,9 +100,9 @@ namespace TextRPG_8_Team
                     continue;
                 }
 
-                Player.Instance().Name = inputName;
+                GameManager.Instance().player.Name = inputName;
 
-                Console.WriteLine($"환영합니다. {Player.Instance().Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
+                Console.WriteLine($"환영합니다. {GameManager.Instance().player.Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
                 Console.ReadLine();
                 break;
             }
