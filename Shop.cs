@@ -17,7 +17,9 @@ namespace TextRPG_8_Team
                 new Item("지팡이", 15, -2, 0, 1300),
                 new Item("도적의 방패", 2, 10, 20 , 1600),
                 new Item("전사의 방패", 10, 5, 20 , 1900),
-                new Item("마법사의 지팡이", 20, 0, 10 , 2100)
+                new Item("마법사의 지팡이", 20, 0, 10 , 2100),
+                new Item("뒤틀린 황천의 바주카포", 300, 0, 0, 3000),
+                new Item("무한의 대검", 99999, 99999, 99999, 5000)
         };
 
         public static void OpenShop()
