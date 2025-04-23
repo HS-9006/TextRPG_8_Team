@@ -7,17 +7,50 @@ public class BattleManager
 {
     public void Battle(List<Monster> monsters)
     {
+        int beforeHp = GameManager.Instance().player.CurrentHP;
         while (GameManager.Instance().player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
         {
             PlayerTurn(monsters);
             MonsterTurn(monsters);
         }
-        if (GameManager.Instance().player.CurrentHP <= 0)
+        if (monsters.All(m => m.health <= 0))
+
         {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("Victory\n");
+            Console.WriteLine($"던전에서 몬스터 {monsters.Count}마리를 잡았습니다.");
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
+            Console.WriteLine($"HP {beforeHp} -> {GameManager.Instance().player.CurrentHP}\n");
+            Console.WriteLine("0. 다음\n");
+            Console.WriteLine(">>");
+            while (true)
+            {
+                bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
+                if (isSelectedMenu && index == 0) break;
+
+                Console.WriteLine("잘못된 입력입니다.");
+            }
             //전투종료
         }
-        else if (monsters.All(m => m.health <= 0))
+        else if (GameManager.Instance().player.CurrentHP <= 0)
         {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("You Lose\n");
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
+            Console.WriteLine($"HP {beforeHp} -> {GameManager.Instance().player.CurrentHP}\n");
+            Console.WriteLine("0. 다음\n");
+            Console.WriteLine(">>");
+            while (true)
+            {
+                bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
+                if (isSelectedMenu && index == 0) break;
+
+                Console.WriteLine("잘못된 입력입니다.");
+            }
             //전투종료
         }
     }
@@ -77,7 +110,7 @@ public class BattleManager
     public void AttackResult(Monster monster)
     {
         int beforeHp = monster.health;
-        IDamageCalculator calculator = new BasicAttack();
+        IDamageCalculator calculator = new PlayerBasicAttack();
         IAttack atk = new PlayerAttack(calculator);
         var (damage, isCritical) = atk.Attack(monster);
 
@@ -102,14 +135,14 @@ public class BattleManager
         foreach (var monster in monsters)
         {
             if (monster.health <= 0) continue;
-            IDamageCalculator calculator = new BasicAttack();
+            IDamageCalculator calculator = new MonsterBasicAttack();
             IAttack atk = new MonsterAttack(calculator);
-            var (damage, isCritical) = atk.Attack(monster);
+            var (damage, _) = atk.Attack(monster);
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}] {(isCritical ? "- 치명타 공격!!" : "")}\n");
+            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
             Console.WriteLine($"Lv.{GameManager.Instance().player.Level} {GameManager.Instance().player.Name}");
             Console.WriteLine($"HP. {GameManager.Instance().player.TotalMaxHP} -> {GameManager.Instance().player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
@@ -162,7 +195,7 @@ public class MonsterAttack : IAttack
         GameManager.Instance().player.CurrentHP -= damage;
         if (GameManager.Instance().player.CurrentHP < 0) GameManager.Instance().player.CurrentHP = 0;
 
-        return (damage, isCritical);
+        return (damage, false);
     }
 }
 
@@ -170,11 +203,11 @@ public interface IDamageCalculator
 {
     (int damage, bool isCritical) Calculate(int atk, int def);
 }
-public class BasicAttack : IDamageCalculator
+public class PlayerBasicAttack : IDamageCalculator
 {
     private Random random = new Random();
-    private double criticalChance = 0.2;
-    private int criticalHit = 2;
+    private double criticalChance = 0.15;
+    private double criticalHit = 1.6;
 
     public (int damage, bool isCritical) Calculate(int atk, int def)
     {
@@ -186,11 +219,29 @@ public class BasicAttack : IDamageCalculator
         int damage = random.Next(min, max + 1);
 
         bool isCritical = random.NextDouble() < criticalChance;
-        if (isCritical) damage = damage * criticalHit;
+        if (isCritical) damage = (int)Math.Ceiling(damage * criticalHit);
 
         int finalDamage = damage - def;
-        if (finalDamage <= 0) finalDamage = 0;
+        if (finalDamage < 0) finalDamage = 0;
 
         return (finalDamage, isCritical);
+    }
+}
+public class MonsterBasicAttack : IDamageCalculator
+{
+    private Random random = new Random();
+
+    public (int damage, bool isCritical) Calculate(int atk, int def)
+    {
+        int error = (int)Math.Ceiling(atk * 0.1);
+        int min = atk - error;
+        int max = atk + error;
+        if (min < 0) min = 0;
+
+        int damage = random.Next(min, max + 1);
+        int finalDamage = damage - def;
+        if (finalDamage < 0) finalDamage = 0;
+
+        return (finalDamage, false);
     }
 }
