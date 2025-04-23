@@ -58,7 +58,7 @@ namespace TextRPG_8_Team
                 Console.WriteLine($"{i + 1}) {shopItems[i]}");
             }
 
-            Console.WriteLine($"보유 Gold: {GameManager.Instance().player.Gold}");
+            Console.WriteLine($"보유 Gold: {GameManager.Instance.player.Gold}");
             Console.Write("구매할 아이템 번호 입력 (0: 취소): ");
 
             if (int.TryParse(Console.ReadLine(), out int index))
@@ -73,10 +73,10 @@ namespace TextRPG_8_Team
                 }
 
                 Item selected = shopItems[index - 1];
-                if (GameManager.Instance().player.Gold >= selected.Price)
+                if (GameManager.Instance.player.Gold >= selected.Price)
                 {
-                    GameManager.Instance().player.Gold -= selected.Price;
-                    GameManager.Instance().player.Inventory.Add(selected);
+                    GameManager.Instance.player.Gold -= selected.Price;
+                    GameManager.Instance.player.Inventory.Add(selected);
                     Console.WriteLine($"{selected.Name}을(를) 구매했습니다.");
                 }
                 else
@@ -91,16 +91,16 @@ namespace TextRPG_8_Team
         }
         static void SellItem()
         {
-            if (GameManager.Instance().player.Inventory.Count == 0)
+            if (GameManager.Instance.player.Inventory.Count == 0)
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
                 return;
             }
 
             Console.WriteLine("\n===== 판매 가능한 아이템 =====");
-            for (int i = 0; i < GameManager.Instance().player.Inventory.Count; i++)
+            for (int i = 0; i < GameManager.Instance.player.Inventory.Count; i++)
             {
-                Item item = GameManager.Instance().player.Inventory[i];
+                Item item = GameManager.Instance.player.Inventory[i];
                 Console.WriteLine($"{i + 1}) {item} (판매가: {item.Price / 2}G)");
             }
 
@@ -110,15 +110,15 @@ namespace TextRPG_8_Team
                 if (index == 0)
                     return;
 
-                if (index < 1 || index > GameManager.Instance().player.Inventory.Count)
+                if (index < 1 || index > GameManager.Instance.player.Inventory.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
                     return;
                 }
 
-                Item item = GameManager.Instance().player.Inventory[index - 1];
-                GameManager.Instance().player.Gold += item.Price / 2;
-                GameManager.Instance().player.Inventory.RemoveAt(index - 1);
+                Item item = GameManager.Instance.player.Inventory[index - 1];
+                GameManager.Instance.player.Gold += item.Price / 2;
+                GameManager.Instance.player.Inventory.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 판매했습니다. {item.Price / 2}G 획득!");
             }
             else

@@ -64,24 +64,24 @@ namespace TextRPG_8_Team
         public void PlayerStat()
         {
             Console.WriteLine("\n===== 캐릭터 정보 =====");
-            Console.WriteLine($"이름: {GameManager.Instance().player.Name}");
-            Console.WriteLine($"직업: {GameManager.Instance().player.Job}");
-            Console.WriteLine($"레벨: {GameManager.Instance().player.Level}");
+            Console.WriteLine($"이름: {GameManager.Instance.player.Name}");
+            Console.WriteLine($"직업: {GameManager.Instance.player.Job}");
+            Console.WriteLine($"레벨: {GameManager.Instance.player.Level}");
 
-            Console.WriteLine($"공격력: {GameManager.Instance().player.BaseAttack} (+{GameManager.Instance().player.BonusAttack}) => {GameManager.Instance().player.TotalAttack}");
-            Console.WriteLine($"방어력: {GameManager.Instance().player.BaseDefense} (+{GameManager.Instance().player.BonusDefense}) => {GameManager.Instance().player.TotalDefense}");
+            Console.WriteLine($"공격력: {GameManager.Instance.player.BaseAttack} (+{GameManager.Instance.player.BonusAttack}) => {GameManager.Instance.player.TotalAttack}");
+            Console.WriteLine($"방어력: {GameManager.Instance.player.BaseDefense} (+{GameManager.Instance.player.BonusDefense}) => {GameManager.Instance.player.TotalDefense}");
 
-            Console.WriteLine($"체력: {GameManager.Instance().player.CurrentHP} / {GameManager.Instance().player.TotalMaxHP}");
-            Console.WriteLine($"Gold: {GameManager.Instance().player.Gold}");
+            Console.WriteLine($"체력: {GameManager.Instance.player.CurrentHP} / {GameManager.Instance.player.TotalMaxHP}");
+            Console.WriteLine($"Gold: {GameManager.Instance.player.Gold}");
 
             Console.WriteLine("\n[장착 중인 아이템]");
-            if (GameManager.Instance().player.EquippedItems.Count == 0)
+            if (GameManager.Instance.player.EquippedItems.Count == 0)
             {
                 Console.WriteLine("없음");
             }
             else
             {
-                foreach (var item in GameManager.Instance().player.EquippedItems)
+                foreach (var item in GameManager.Instance.player.EquippedItems)
                 {
                     Console.WriteLine($"- {item}");
                 }

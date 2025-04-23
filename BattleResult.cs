@@ -33,8 +33,8 @@ namespace TextRPG_8_Team
                 }
 
                 Console.WriteLine("\n");
-                Console.WriteLine($"Lv.{GameManager.Instance().player.Level} {GameManager.Instance().player.Name}");
-                Console.WriteLine($"HP {GameManager.Instance().player.TotalMaxHP} -> {GameManager.Instance().player.CurrentHP}\n");
+                Console.WriteLine($"Lv.{GameManager.Instance.player.Level} {GameManager.Instance.player.Name}");
+                Console.WriteLine($"HP {GameManager.Instance.player.TotalMaxHP} -> {GameManager.Instance.player.CurrentHP}\n");
 
                 Console.WriteLine("0. 다음\n");
                 Console.Write(">> ");

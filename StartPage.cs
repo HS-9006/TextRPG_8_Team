@@ -50,7 +50,7 @@ namespace TextRPG_8_Team
                 switch (enumChoice)
                 {
                     case StartChoice.Status:
-                        GameManager.Instance().player.PlayerStat();
+                        GameManager.Instance.player.PlayerStat();
                         break;
                     case StartChoice.Battle:
                         StartBattle startBattle = new StartBattle();
@@ -100,9 +100,9 @@ namespace TextRPG_8_Team
                     continue;
                 }
 
-                GameManager.Instance().player.Name = inputName;
+                GameManager.Instance.player.Name = inputName;
 
-                Console.WriteLine($"환영합니다. {GameManager.Instance().player.Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
+                Console.WriteLine($"환영합니다. {GameManager.Instance.player.Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
                 Console.ReadLine();
                 break;
             }
