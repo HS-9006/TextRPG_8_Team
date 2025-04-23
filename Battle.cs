@@ -33,7 +33,7 @@ public class BattleManager
                 Monster monster = monsters[i];
                 Console.ForegroundColor = monster.health <= 0 ? ConsoleColor.DarkGray : ConsoleColor.White;
                 string hp = monster.health <= 0 ? "Dead" : $"HP {monster.health}";
-                Console.WriteLine($"{i + 1} Lv.{monster.level} {monster.name} HP {hp}");
+                Console.WriteLine($"{i + 1} Lv.{monster.level} {monster.name} {hp}");
             }
             Console.ResetColor();
             Console.WriteLine("\n[내 정보]");
@@ -79,12 +79,12 @@ public class BattleManager
         int beforeHp = monster.health;
         IDamageCalculator calculator = new BasicAttack();
         IAttack atk = new PlayerAttack(calculator);
-        int damage = atk.Attack(monster);
+        var (damage, isCritical) = atk.Attack(monster);
 
         Console.Clear();
         Console.WriteLine("Battle!!\n");
         Console.WriteLine($"{GameManager.Instance().player.Name}의 공격!");
-        Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+        Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]  {(isCritical ? "- 치명타 공격!!" : "")}\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
         Console.WriteLine($"HP {beforeHp} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
         Console.WriteLine("0. 다음\n");
@@ -104,12 +104,12 @@ public class BattleManager
             if (monster.health <= 0) continue;
             IDamageCalculator calculator = new BasicAttack();
             IAttack atk = new MonsterAttack(calculator);
-            int damage = atk.Attack(monster);
+            var (damage, isCritical) = atk.Attack(monster);
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}] {(isCritical ? "- 치명타 공격!!" : "")}\n");
             Console.WriteLine($"Lv.{GameManager.Instance().player.Level} {GameManager.Instance().player.Name}");
             Console.WriteLine($"HP. {GameManager.Instance().player.TotalMaxHP} -> {GameManager.Instance().player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
@@ -128,7 +128,7 @@ public class BattleManager
 
 public interface IAttack
 {
-    int Attack(Monster monster);
+    (int damage, bool isCritical) Attack(Monster monster);
 }
 
 public class PlayerAttack : IAttack
@@ -138,12 +138,12 @@ public class PlayerAttack : IAttack
     {
         this.calculator = calculator;
     }
-    public int Attack(Monster monster)
+    public (int damage, bool isCritical) Attack(Monster monster)
     {
-        int damage = calculator.Calculate(GameManager.Instance().player.TotalAttack, monster.def);
+        var (damage, isCritical) = calculator.Calculate(GameManager.Instance().player.TotalAttack, monster.def);
         monster.health -= damage;
 
-        return damage;
+        return (damage, isCritical);
     }
 }
 
@@ -156,34 +156,41 @@ public class MonsterAttack : IAttack
         this.calculator = calculator;
     }
 
-    public int Attack(Monster monster)
+    public (int damage, bool isCritical) Attack(Monster monster)
     {
-        int damage = calculator.Calculate(monster.attack, GameManager.Instance().player.TotalDefense);
+        var (damage, isCritical) = calculator.Calculate(monster.attack, GameManager.Instance().player.TotalDefense);
         GameManager.Instance().player.CurrentHP -= damage;
         if (GameManager.Instance().player.CurrentHP < 0) GameManager.Instance().player.CurrentHP = 0;
 
-        return damage;
+        return (damage, isCritical);
     }
 }
 
 public interface IDamageCalculator
 {
-    int Calculate(int atk, int def);
+    (int damage, bool isCritical) Calculate(int atk, int def);
 }
 public class BasicAttack : IDamageCalculator
 {
     private Random random = new Random();
+    private double criticalChance = 0.2;
+    private int criticalHit = 2;
 
-    public int Calculate(int atk, int def)
+    public (int damage, bool isCritical) Calculate(int atk, int def)
     {
-        int baseDamage = atk - def;
-        if (baseDamage < 0) baseDamage = 0;
-
-        int error = (int)Math.Ceiling(baseDamage * 0.1);
-        int min = baseDamage - (int)error;
-        int max = baseDamage + (int)error;
+        int error = (int)Math.Ceiling(atk * 0.1);
+        int min = atk - error;
+        int max = atk + error;
         if (min < 0) min = 0;
 
-        return random.Next(min, max + 1);
+        int damage = random.Next(min, max + 1);
+
+        bool isCritical = random.NextDouble() < criticalChance;
+        if (isCritical) damage = damage * criticalHit;
+
+        int finalDamage = damage - def;
+        if (finalDamage <= 0) finalDamage = 0;
+
+        return (finalDamage, isCritical);
     }
 }
