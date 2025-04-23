@@ -82,7 +82,6 @@ public class BattleManager
 
         Console.Clear();
         Console.WriteLine("Battle!!\n");
-
         Console.WriteLine($"{GameManager.Instance().player.Name}의 공격!");
         Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
