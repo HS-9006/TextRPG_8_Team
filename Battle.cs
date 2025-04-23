@@ -10,7 +10,7 @@ public class BattleManager
         while (player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
         {
             PlayerTurn(player, monsters);
-            MonsterTurn(player, monsters);
+            MonsterTurn(monsters);
         }
         if (player.CurrentHP <= 0)
         {
@@ -37,7 +37,7 @@ public class BattleManager
             }
             Console.ResetColor();
             Console.WriteLine("\n[내 정보]");
-            Console.WriteLine($"Lv.{player.level} Chad{player.job}");
+            Console.WriteLine($"Lv.{player.Level} Chad{player.Job}");
             Console.WriteLine($"HP {player.CurrentHP}/{player.MaxHP}");
             Console.WriteLine("\n0. 취소");
             Console.WriteLine("\n대상을 선택해주세요");
@@ -60,7 +60,7 @@ public class BattleManager
                 Monster target = monsters[index - 1];
                 if (target.health > 0)
                 {
-                    AttackResult(player, target);
+                    AttackResult(target);
                     break;
                 }
                 else
@@ -74,19 +74,19 @@ public class BattleManager
             Thread.Sleep(1000);
         }
     }
-    public void AttackResult(Player player, Monster monster)
+    public void AttackResult(Monster monster)
     {
         IDamageCalculator calculator = new BasicAttack();
         IAttack atk = new PlayerAttack(calculator);
-        int damage = atk.Attack(player, monster);
+        int damage = atk.Attack(monster);
 
         Console.Clear();
         Console.WriteLine("Battle!!\n");
 
-        Console.WriteLine($"{player.name}의 공격!");
+        Console.WriteLine($"{GameManager.Instance().player.Name}의 공격!");
         Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
-        Console.WriteLine($"HP {monster.health} -> ({monster.health <= 0 ? "Dead" : monster.health})\n");
+        Console.WriteLine($"HP {monster.health} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
         Console.WriteLine("0. 다음\n");
         Console.WriteLine(">>");
         while (true)
@@ -97,21 +97,21 @@ public class BattleManager
             Console.WriteLine("잘못된 입력입니다.");
         }
     }
-    public void MonsterTurn(Player player, List<Monster> monsters)
+    public void MonsterTurn(List<Monster> monsters)
     {
         foreach (var monster in monsters)
         {
             if (monster.health <= 0) continue;
             IDamageCalculator calculator = new BasicAttack();
             IAttack atk = new MonsterAttack(calculator);
-            int damage = atk.Attack(player, monster);
+            int damage = atk.Attack(monster);
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{player.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
-            Console.WriteLine($"Lv.{player.level} {player.name}");
-            Console.WriteLine($"HP. {player.TotalMaxHP} -> {player.CurrentHP}\n");
+            Console.WriteLine($"{GameManager.Instance().player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} {GameManager.Instance().player.Name}");
+            Console.WriteLine($"HP. {GameManager.Instance().player.TotalMaxHP} -> {GameManager.Instance().player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.WriteLine(">>");
@@ -128,7 +128,7 @@ public class BattleManager
 
 public interface IAttack
 {
-    int Attack(Player player, Monster monster);
+    int Attack(Monster monster);
 }
 
 public class PlayerAttack : IAttack
@@ -138,9 +138,9 @@ public class PlayerAttack : IAttack
     {
         this.calculator = calculator;
     }
-    public int Attack(Player player, Monster monster)
+    public int Attack( Monster monster)
     {
-        int damage = calculator.Calculate(player.Totalattack, monster.def);
+        int damage = calculator.Calculate(GameManager.Instance().player.TotalAttack, monster.def);
         monster.health -= damage;
 
         return damage;
@@ -156,11 +156,11 @@ public class MonsterAttack : IAttack
         this.calculator = calculator;
     }
 
-    public int Attack(Player player, Monster monster)
+    public int Attack(Monster monster)
     {
-        int damage = calculator.Calculate(monster.attack, player.TotalDefense);
-        player.CurrentHP -= damage;
-        if (player.CurrentHP < 0) player.CurrentHP = 0;
+        int damage = calculator.Calculate(monster.attack, GameManager.Instance().player.TotalDefense);
+        GameManager.Instance().player.CurrentHP -= damage;
+        if (GameManager.Instance().player.CurrentHP < 0) GameManager.Instance().player.CurrentHP = 0;
 
         return damage;
     }

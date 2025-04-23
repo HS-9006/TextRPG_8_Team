@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,16 +16,6 @@ namespace TextRPG_8_Team
 
     public class Player
     {
-        //싱글톤
-        public static Player instance;
-        public static Player Instance()
-        {
-            if(instance == null)
-            {
-                instance = new Player();
-            }
-            return instance;
-        }
         public string Name;
         public JobType Job = JobType.Warrior;
         public int Level = 1;
@@ -73,24 +64,24 @@ namespace TextRPG_8_Team
         public void PlayerStat()
         {
             Console.WriteLine("\n===== 캐릭터 정보 =====");
-            Console.WriteLine($"이름: {Player.Instance().Name}");
-            Console.WriteLine($"직업: {Player.Instance().Job}");
-            Console.WriteLine($"레벨: {Player.Instance().Level}");
+            Console.WriteLine($"이름: {GameManager.Instance().player.Name}");
+            Console.WriteLine($"직업: {GameManager.Instance().player.Job}");
+            Console.WriteLine($"레벨: {GameManager.Instance().player.Level}");
 
-            Console.WriteLine($"공격력: {Player.Instance().BaseAttack} (+{Player.Instance().BonusAttack}) => {Player.Instance().TotalAttack}");
-            Console.WriteLine($"방어력: {Player.Instance().BaseDefense} (+{Player.Instance().BonusDefense}) => {Player.Instance().TotalDefense}");
+            Console.WriteLine($"공격력: {GameManager.Instance().player.BaseAttack} (+{GameManager.Instance().player.BonusAttack}) => {GameManager.Instance().player.TotalAttack}");
+            Console.WriteLine($"방어력: {GameManager.Instance().player.BaseDefense} (+{GameManager.Instance().player.BonusDefense}) => {GameManager.Instance().player.TotalDefense}");
 
-            Console.WriteLine($"체력: {Player.Instance().CurrentHP} / {Player.Instance().TotalMaxHP}");
-            Console.WriteLine($"Gold: {Player.Instance().Gold}");
+            Console.WriteLine($"체력: {GameManager.Instance().player.CurrentHP} / {GameManager.Instance().player.TotalMaxHP}");
+            Console.WriteLine($"Gold: {GameManager.Instance().player.Gold}");
 
             Console.WriteLine("\n[장착 중인 아이템]");
-            if (Player.instance.EquippedItems.Count == 0)
+            if (GameManager.Instance().player.EquippedItems.Count == 0)
             {
                 Console.WriteLine("없음");
             }
             else
             {
-                foreach (var item in Player.instance.EquippedItems)
+                foreach (var item in GameManager.Instance().player.EquippedItems)
                 {
                     Console.WriteLine($"- {item}");
                 }
