@@ -23,7 +23,7 @@ namespace TextRPG_8_Team
                     Console.WriteLine("Victory");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("\n");
-                    Console.WriteLine($"던전에서 몬스터 {monsters.Where(x => x.health <= 0).ToList().Count()}마리를 잡았습니다.");
+                    Console.WriteLine($"던전에서 몬스터 {monsters.Count()}마리를 잡았습니다.");
                 }
                 else
                 {
