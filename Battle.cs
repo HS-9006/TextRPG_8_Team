@@ -76,6 +76,7 @@ public class BattleManager
     }
     public void AttackResult(Monster monster)
     {
+        int beforeHp = monster.health;
         IDamageCalculator calculator = new BasicAttack();
         IAttack atk = new PlayerAttack(calculator);
         int damage = atk.Attack(monster);
@@ -85,7 +86,7 @@ public class BattleManager
         Console.WriteLine($"{GameManager.Instance().player.Name}의 공격!");
         Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
-        Console.WriteLine($"HP {monster.health} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
+        Console.WriteLine($"HP {beforeHp} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
         Console.WriteLine("0. 다음\n");
         Console.WriteLine(">>");
         while (true)
