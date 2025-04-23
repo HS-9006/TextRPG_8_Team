@@ -2,10 +2,9 @@
 {
     internal class Program
     {
-        static StartPage StartPage = new StartPage();
         static void Main(string[] args)
         {
-            StartPage.StartGame();
+            GameManager.Instance().GameStart();
         }
     }
 }
