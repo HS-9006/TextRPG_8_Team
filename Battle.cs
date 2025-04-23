@@ -5,14 +5,14 @@ namespace TextRPG_8_Team;
 
 public class BattleManager
 {
-    public void Battle(Player player, List<Monster> monsters)
+    public void Battle(List<Monster> monsters)
     {
-        while (player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
+        while (GameManager.Instance().player.CurrentHP > 0 && monsters.Any(m => m.health > 0))
         {
-            PlayerTurn(player, monsters);
+            PlayerTurn(monsters);
             MonsterTurn(monsters);
         }
-        if (player.CurrentHP <= 0)
+        if (GameManager.Instance().player.CurrentHP <= 0)
         {
             //전투종료
         }
@@ -21,7 +21,7 @@ public class BattleManager
             //전투종료
         }
     }
-    public void PlayerTurn(Player player, List<Monster> monsters)
+    public void PlayerTurn(List<Monster> monsters)
     {
         while (true)
         {
@@ -37,8 +37,8 @@ public class BattleManager
             }
             Console.ResetColor();
             Console.WriteLine("\n[내 정보]");
-            Console.WriteLine($"Lv.{player.Level} Chad{player.Job}");
-            Console.WriteLine($"HP {player.CurrentHP}/{player.MaxHP}");
+            Console.WriteLine($"Lv.{GameManager.Instance().player.Level} Chad{GameManager.Instance().player.Job}");
+            Console.WriteLine($"HP {GameManager.Instance().player.CurrentHP}/{GameManager.Instance().player.MaxHP}");
             Console.WriteLine("\n0. 취소");
             Console.WriteLine("\n대상을 선택해주세요");
             Console.WriteLine(">>");
@@ -137,7 +137,7 @@ public class PlayerAttack : IAttack
     {
         this.calculator = calculator;
     }
-    public int Attack( Monster monster)
+    public int Attack(Monster monster)
     {
         int damage = calculator.Calculate(GameManager.Instance().player.TotalAttack, monster.def);
         monster.health -= damage;
