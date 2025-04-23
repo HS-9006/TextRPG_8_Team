@@ -12,16 +12,6 @@ namespace TextRPG_8_Team
         public static Quest? instance;
         public static KillMonster killMonster = new KillMonster();
 
-        //싱글톤
-        public static Quest Instance()
-        {
-            if (instance == null)
-            {
-                instance = new Quest();
-            }
-            return instance;
-        }
-
         public void GulidQuest()
         {
             while (true)
@@ -94,7 +84,7 @@ namespace TextRPG_8_Team
                     }
                     else if (choiceNumKill == 1)
                     {
-                        Player.instance.Inventory.Add(new Item("쓸만한 방패", 0, 10, 0, 10));
+                        GameManager.Instance().player.Inventory.Add(new Item("쓸만한 방패", 0, 10, 0, 10));
                         isKillMonster = false;
                     }
                     else

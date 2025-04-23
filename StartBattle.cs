@@ -11,7 +11,7 @@ namespace TextRPG_8_Team
     {
         private Random rand = new Random();
 
-        public void start(Player player)
+        public void start()
         {
             Console.WriteLine("전투시작");
 
@@ -19,7 +19,7 @@ namespace TextRPG_8_Team
             List<Monster> monster = RandomMonsters();
 
             // 2. 내 정보 출력
-            player.PlayerStat(player);
+            GameManager.Instance().player.PlayerStat();
 
             // 3. 몬스터 출력
             for(int i = 0; i < monster.Count; i++)
