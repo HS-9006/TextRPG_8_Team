@@ -19,17 +19,14 @@ namespace TextRPG_8_Team
             // 1. 몬스터 생성
             List<Monster> monster = RandomMonsters();
 
-            // 2. 내 정보 출력
-            GameManager.Instance().player.PlayerStat();
-
-            // 3. 몬스터 출력
+            // 2. 몬스터 출력
             for(int i = 0; i < monster.Count; i++)
             {
                 Monster m = monster[i];
                 Console.WriteLine($"{i + 1}. Lv {m.level}{m.name}(HP: {m.health})");
             }
 
-            // 4. 행동 선택
+            // 3. 행동 선택
             Console.WriteLine("1. 공격");
             Console.WriteLine("원하는 행동을 입력하세요.");
             string action = Console.ReadLine();
