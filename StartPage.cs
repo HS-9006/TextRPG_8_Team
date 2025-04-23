@@ -53,6 +53,8 @@ namespace TextRPG_8_Team
                         GameManager.Instance().player.PlayerStat();
                         break;
                     case StartChoice.Battle:
+                        StartBattle startBattle = new StartBattle();
+                        startBattle.start();
                         break;
                     case StartChoice.Inventory:
                         InventorySystem.ShowInventory();
