@@ -35,26 +35,12 @@ namespace TextRPG_8_Team
 
             if (action == "1")
             {
-                Console.WriteLine("공격할 몬스터의 번호를 선택해주세요.");
-                string input = Console.ReadLine();
-
-                if(int.TryParse(input, out int index) && index > 0 && index <= monster.Count)
-                {
-                    Monster currentMonster = monster[index - 1];
-
-                    if (!currentMonster.isAlive)
-                    {
-                        Console.WriteLine("이미죽은 몬스터입니다.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"플레이어가 {currentMonster.name}을 공격했습니다.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("잘못 입력하셨습니다.");
-                }
+                BattleManager battleManager = new BattleManager();
+                battleManager.Battle(monster);
+            }
+            else
+            {
+                Console.WriteLine("잘못된 입력입니다.");
             }
         }
 
