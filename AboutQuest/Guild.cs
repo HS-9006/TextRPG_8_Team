@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TextRPG_8_Team
 {
-    //아직 덜 만듬
     internal class Guild
     {
         public Guild()
@@ -17,7 +16,6 @@ namespace TextRPG_8_Team
         {
             while (true)
             {
-                //
                 foreach(var quest in QuestManager.Instance.QuestList)
                 {
                     quest.Logic();
