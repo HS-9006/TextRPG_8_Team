@@ -63,6 +63,7 @@ namespace TextRPG_8_Team
 
         public void PlayerStat()
         {
+            Console.Clear();
             Console.WriteLine("\n===== 캐릭터 정보 =====");
             Console.WriteLine($"이름: {GameManager.Instance.player.Name}");
             Console.WriteLine($"직업: {GameManager.Instance.player.Job}");

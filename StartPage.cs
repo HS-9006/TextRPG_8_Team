@@ -112,11 +112,47 @@ namespace TextRPG_8_Team
 
                 GameManager.Instance.player.Name = inputName;
 
-                Console.WriteLine($"환영합니다. {GameManager.Instance.player.Name}님! \n\n잠시후 넘어갑니다!");
+                Console.WriteLine($"환영합니다. {GameManager.Instance.player.Name}님! \n\n이제 직업을 선택해주세요!");
+                GameManager.Instance.TotalThreadSleep();
+                Console.Clear();
+                //캐릭터 이름 정하고 직업 설정
+                Console.WriteLine("\n직업을 선택하세요:");
+                Console.WriteLine("1) 전사 (밸런스 있는 능력치)");
+                Console.WriteLine("2) 도적 (강력하지만 낮은 체력)");
+                Console.WriteLine("3) 마법사 (매우 강력하지만 허약한 체력)");
+
+                while (true)
+                {
+                    Console.Write("번호 입력: ");
+                    string input = Console.ReadLine();
+
+                    switch (input)
+                    {
+                        case "1":
+                            GameManager.Instance.player.Job = JobType.Warrior;
+                            break;
+                        case "2":
+                            GameManager.Instance.player.Job = JobType.Thief;
+                            break;
+                        case "3":
+                            GameManager.Instance.player.Job = JobType.Mage;
+                            break;
+                        default:
+                            Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요.");
+                            continue;
+                    }
+                    break;
+                }
+                //직업 고르면 능력치 조정
+                GameManager.Instance.player.ApplyJobStats();
+                Console.Clear();
+                Console.WriteLine($"\n{GameManager.Instance.player.Job} {GameManager.Instance.player.Name}님 이제 모험을 시작합니다!\n");
                 GameManager.Instance.TotalThreadSleep();
                 break;
             }
         }
+
+            
 
         public void Init()
         {
