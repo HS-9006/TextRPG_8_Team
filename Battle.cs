@@ -43,22 +43,22 @@ public class BattleManager
             Console.WriteLine("\n0. 취소");
             Console.WriteLine("\n대상을 선택해주세요");
             Console.WriteLine(">>");
-            bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
-            if (!isSelectedMenu)
+            bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+            if (!isChoiceNum)
             {
                 Console.WriteLine("잘못된 입력입니다.");
                 Thread.Sleep(1000);
                 continue;
             }
 
-            if (index == 0)
+            if (choiceNum == 0)
             {
                 break;
             }
 
-            if (index >= 1 && index <= monsters.Count)
+            if (choiceNum >= 1 && choiceNum <= monsters.Count)
             {
-                Monster target = monsters[index - 1];
+                Monster target = monsters[choiceNum - 1];
                 if (target.health > 0)
                 {
                     AttackResult(target);
@@ -99,8 +99,8 @@ public class BattleManager
         Console.WriteLine(">>");
         while (true)
         {
-            bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
-            if (isSelectedMenu && index == 0) break;
+            bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+            if (isChoiceNum && choiceNum == 0) break;
 
             Console.WriteLine("잘못된 입력입니다.");
         }
@@ -133,8 +133,8 @@ public class BattleManager
             Console.WriteLine(">>");
             while (true)
             {
-                bool isSelectedMenu = int.TryParse(Console.ReadLine(), out int index);
-                if (isSelectedMenu && index == 0) break;
+                bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+                if (isChoiceNum && choiceNum == 0) break;
 
                 Console.WriteLine("잘못된 입력입니다.");
             }
