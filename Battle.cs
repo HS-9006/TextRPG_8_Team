@@ -80,14 +80,21 @@ public class BattleManager
         int beforeHp = monster.health;
         IDamageCalculator calculator = new PlayerBasicAttack();
         IAttack atk = new PlayerAttack(calculator);
-        var (damage, isCritical) = atk.Attack(monster);
+        var (damage, isCritical, isMiss) = atk.Attack(monster);
 
         Console.Clear();
         Console.WriteLine("Battle!!\n");
         Console.WriteLine($"{GameManager.Instance.player.Name}의 공격!");
-        Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 맞췄습니다. [데미지 : {damage}]  {(isCritical ? "- 치명타 공격!!" : "")}\n");
+        if (isMiss)
+        {
+            Console.WriteLine($"Lv.{monster.name}이(가) 공격을 회피했습니다.\n");
+        }
+        else
+        {
+            Console.WriteLine($"Lv.{monster.level} {monster.name}을(를) 공격했습니다. [데미지 : {damage}]  {(isCritical ? "- 치명타 공격!!" : "")}\n");
+        }
         Console.WriteLine($"Lv.{monster.level} {monster.name}");
-        Console.WriteLine($"HP {beforeHp} -> ({(monster.health <= 0 ? "Dead" : monster.health)})\n");
+        Console.WriteLine($"HP {beforeHp} -> {(monster.health <= 0 ? "Dead" : monster.health)}\n");
         Console.WriteLine("0. 다음\n");
         Console.WriteLine(">>");
         while (true)
@@ -103,16 +110,24 @@ public class BattleManager
         foreach (var monster in monsters)
         {
             if (monster.health <= 0) continue;
+            int beforeHp = GameManager.Instance.player.CurrentHP;
             IDamageCalculator calculator = new MonsterBasicAttack();
             IAttack atk = new MonsterAttack(calculator);
-            var (damage, _) = atk.Attack(monster);
+            var (damage, _, isMiss) = atk.Attack(monster);
 
             Console.Clear();
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"Lv.{monster.level} {monster.name}의 공격!");
-            Console.WriteLine($"{GameManager.Instance.player.Name}을(를) 맞췄습니다. [데미지 : {damage}]\n");
+            if (isMiss)
+            {
+                Console.WriteLine($"{GameManager.Instance.player.Name}이(가) Lv.{monster.level} {monster.name}의 공격을 회피했습니다.\n");
+            }
+            else
+            {
+                Console.WriteLine($"{GameManager.Instance.player.Name}을(를) 공격했습니다. [데미지 : {damage}]\n");
+            }
             Console.WriteLine($"Lv.{GameManager.Instance.player.Level} {GameManager.Instance.player.Name}");
-            Console.WriteLine($"HP. {GameManager.Instance.player.TotalMaxHP} -> {GameManager.Instance.player.CurrentHP}\n");
+            Console.WriteLine($"HP. {beforeHp} -> {GameManager.Instance.player.CurrentHP}\n");
             Console.WriteLine("0. 다음\n");
             Console.WriteLine("대상을 선택해주세요.");
             Console.WriteLine(">>");
@@ -129,7 +144,7 @@ public class BattleManager
 
 public interface IAttack
 {
-    (int damage, bool isCritical) Attack(Monster monster);
+    (int damage, bool isCritical, bool isMiss) Attack(Monster monster);
 }
 
 public class PlayerAttack : IAttack
@@ -139,12 +154,12 @@ public class PlayerAttack : IAttack
     {
         this.calculator = calculator;
     }
-    public (int damage, bool isCritical) Attack(Monster monster)
+    public (int damage, bool isCritical, bool isMiss) Attack(Monster monster)
     {
-        var (damage, isCritical) = calculator.Calculate(GameManager.Instance.player.TotalAttack, monster.def);
+        var (damage, isCritical, isMiss) = calculator.Calculate(GameManager.Instance.player.TotalAttack, monster.def);
         monster.health -= damage;
 
-        return (damage, isCritical);
+        return (damage, isCritical, isMiss);
     }
 }
 
@@ -157,50 +172,57 @@ public class MonsterAttack : IAttack
         this.calculator = calculator;
     }
 
-    public (int damage, bool isCritical) Attack(Monster monster)
+    public (int damage, bool isCritical, bool isMiss) Attack(Monster monster)
     {
-        var (damage, isCritical) = calculator.Calculate(monster.attack, GameManager.Instance.player.TotalDefense);
+        var (damage, isCritical, isMiss) = calculator.Calculate(monster.attack, GameManager.Instance.player.TotalDefense);
         GameManager.Instance.player.CurrentHP -= damage;
         if (GameManager.Instance.player.CurrentHP < 0) GameManager.Instance.player.CurrentHP = 0;
 
-        return (damage, false);
+        return (damage, false, isMiss);
     }
 }
 
 public interface IDamageCalculator
 {
-    (int damage, bool isCritical) Calculate(int atk, int def);
+    (int damage, bool isCritical, bool isMiss) Calculate(int atk, int def);
 }
 public class PlayerBasicAttack : IDamageCalculator
 {
     private Random random = new Random();
     private double criticalChance = 0.15;
     private double criticalHit = 1.6;
+    private double evasionChance = 0.5;
 
-    public (int damage, bool isCritical) Calculate(int atk, int def)
+    public (int damage, bool isCritical, bool isMiss) Calculate(int atk, int def)
     {
+        bool isMiss = random.NextDouble() < evasionChance;
+        if (isMiss) return (0, false, true);
+
         int error = (int)Math.Ceiling(atk * 0.1);
         int min = atk - error;
         int max = atk + error;
         if (min < 0) min = 0;
 
         int damage = random.Next(min, max + 1);
-
         bool isCritical = random.NextDouble() < criticalChance;
         if (isCritical) damage = (int)Math.Ceiling(damage * criticalHit);
 
         int finalDamage = damage - def;
         if (finalDamage < 0) finalDamage = 0;
 
-        return (finalDamage, isCritical);
+        return (finalDamage, isCritical, false);
     }
 }
 public class MonsterBasicAttack : IDamageCalculator
 {
     private Random random = new Random();
+    private double evasionChance = 0.5;
 
-    public (int damage, bool isCritical) Calculate(int atk, int def)
+    public (int damage, bool isCritical, bool isMiss) Calculate(int atk, int def)
     {
+        bool isMiss = random.NextDouble() < evasionChance;
+        if (isMiss) return (0, false, true);
+
         int error = (int)Math.Ceiling(atk * 0.1);
         int min = atk - error;
         int max = atk + error;
@@ -210,6 +232,6 @@ public class MonsterBasicAttack : IDamageCalculator
         int finalDamage = damage - def;
         if (finalDamage < 0) finalDamage = 0;
 
-        return (finalDamage, false);
+        return (finalDamage, false, false);
     }
 }
