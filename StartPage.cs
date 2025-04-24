@@ -26,6 +26,7 @@ namespace TextRPG_8_Team
                 Console.Clear();
                 Console.WriteLine("이제 전투를 시작할 수 있습니다.\n");
 
+                //eunm개수만큼 반복해서 메뉴 출력
                 for (int i = 0; i < System.Enum.GetValues(typeof(StartChoice)).Length; i++)
                 {
                     StartChoice num = (StartChoice)i + 1;
