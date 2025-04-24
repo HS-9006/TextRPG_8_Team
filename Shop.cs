@@ -26,6 +26,7 @@ namespace TextRPG_8_Team
         {
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("\n===== 상점 =====");
                 Console.WriteLine("1) 아이템 구매");
                 Console.WriteLine("2) 아이템 판매");
@@ -43,15 +44,18 @@ namespace TextRPG_8_Team
                         break;
                     case "0":
                         Console.WriteLine("상점을 나갑니다.\n");
+                        GameManager.Instance.TotalThreadSleep();
                         return;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
+                        GameManager.Instance.TotalThreadSleep();
                         break;
                 }
             }
         }
         static void BuyItem()
         {
+            Console.Clear();
             Console.WriteLine("\n===== 상점 아이템 목록 =====");
             for (int i = 0; i < shopItems.Count; i++)
             {
@@ -69,6 +73,7 @@ namespace TextRPG_8_Team
                 if (index < 1 || index > shopItems.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
+                    GameManager.Instance.TotalThreadSleep();
                     return;
                 }
 
@@ -78,22 +83,27 @@ namespace TextRPG_8_Team
                     GameManager.Instance.player.Gold -= selected.Price;
                     GameManager.Instance.player.Inventory.Add(selected);
                     Console.WriteLine($"{selected.Name}을(를) 구매했습니다.");
+                    GameManager.Instance.TotalThreadSleep();
                 }
                 else
                 {
                     Console.WriteLine("Gold가 부족합니다.");
+                    GameManager.Instance.TotalThreadSleep();
                 }
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
+                GameManager.Instance.TotalThreadSleep();
             }
         }
         static void SellItem()
         {
+            Console.Clear();
             if (GameManager.Instance.player.Inventory.Count == 0)
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
+                GameManager.Instance.TotalThreadSleep();
                 return;
             }
 
@@ -113,6 +123,7 @@ namespace TextRPG_8_Team
                 if (index < 1 || index > GameManager.Instance.player.Inventory.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
+                    GameManager.Instance.TotalThreadSleep();
                     return;
                 }
 
@@ -120,10 +131,12 @@ namespace TextRPG_8_Team
                 GameManager.Instance.player.Gold += item.Price / 2;
                 GameManager.Instance.player.Inventory.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 판매했습니다. {item.Price / 2}G 획득!");
+                GameManager.Instance.TotalThreadSleep();
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
+                GameManager.Instance.TotalThreadSleep();
             }
         }
 
