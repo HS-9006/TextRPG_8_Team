@@ -35,6 +35,7 @@ namespace TextRPG_8_Team
 
         public void MoveClearList(Quest _quest)
         {
+            _quest.isMoveClear = true;
             QuestClaerList.Add(_quest);
             QuestList.Remove(_quest);
         }
