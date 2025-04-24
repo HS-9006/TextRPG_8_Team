@@ -26,6 +26,12 @@ namespace TextRPG_8_Team
 
         public Player player = new Player();
         public StartPage startPage = new StartPage();
+        public Guild guild = new Guild();
+
+        public void TotalThreadSleep()
+        {
+            Thread.Sleep(1000);
+        }
 
         public void GameStart()
         {

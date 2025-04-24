@@ -13,6 +13,8 @@ namespace TextRPG_8_Team
         //시작 화면
         public void StartGame()
         {
+            Init();
+
             bool isGameEnd = false;
 
             SettingName();
@@ -37,8 +39,8 @@ namespace TextRPG_8_Team
                     Thread.Sleep(500);
                     continue;
                 }
-                //1~6의 값이 아니라면 실행
-                if (choiceNum > 6 || choiceNum < 1)
+                //1 ~ Eunm 갯수 사이의 값이 아니라면 실행
+                if (choiceNum > System.Enum.GetValues(typeof(StartChoice)).Length || choiceNum < 1)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                     Thread.Sleep(500);
@@ -62,15 +64,11 @@ namespace TextRPG_8_Team
                     case StartChoice.Shop:
                         Shop.OpenShop();
                         break;
-                    case StartChoice.Inn:
-                        Inn.VisitInn();
+                    case StartChoice.Guild:
+                        GameManager.Instance.guild.GulidQuest();
                         break;
                     case StartChoice.GameEnd:
                         isGameEnd = true;
-                        break;
-                    //case StartChoice.Guild:
-                    //break;
-                    default:
                         break;
                 }
             }
@@ -84,9 +82,8 @@ namespace TextRPG_8_Team
             Battle,
             Inventory,
             Shop,
-            Inn,
-            GameEnd,
-            //Guild
+            Guild,
+            GameEnd
         }
 
         public void SettingName()
@@ -106,10 +103,17 @@ namespace TextRPG_8_Team
 
                 GameManager.Instance.player.Name = inputName;
 
-                Console.WriteLine($"환영합니다. {GameManager.Instance.player.Name}님! \n\n계속하시려면 아무키나 눌러주세요!");
-                Console.ReadLine();
+                Console.WriteLine($"환영합니다. {GameManager.Instance.player.Name}님! \n\n잠시후 넘어갑니다!");
+                GameManager.Instance.TotalThreadSleep();
                 break;
             }
+        }
+
+        public void Init()
+        {
+            QuestManager.Instance.QuestList.Add(new KillMonster()); 
+            QuestManager.Instance.QuestList.Add(new Equipped()); 
+            QuestManager.Instance.QuestList.Add(new AttackPower100());
         }
     }
 }

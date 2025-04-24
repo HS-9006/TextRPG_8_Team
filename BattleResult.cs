@@ -16,6 +16,8 @@ namespace TextRPG_8_Team
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("\n");
+                 
+                
 
                 if (isWin)
                 {
@@ -58,7 +60,7 @@ namespace TextRPG_8_Team
                 else if (choiceNum == 0)
                 {
                     BattleResultInit(monsters);
-                    //GameManager.instance.GameStart();
+                    //GameManager.instance.GameStart(); 
                     return;
                 }
 
@@ -66,6 +68,10 @@ namespace TextRPG_8_Team
         }
         public static void BattleResultInit(List<Monster> monsters)
         {
+            //몬스터 5마리 잡는 퀘스트
+            int totalKill = monsters.Where(m => !m.isAlive).Count();
+            QuestManager.Instance.SearchQuest<KillMonster>("KillMonster").QuestMonsterKillCount(totalKill);
+
             int totalGold = monsters.Where(m => !m.isAlive).Sum(m => m.gold);
             GameManager.Instance.player.Gold += totalGold;
 

@@ -10,11 +10,15 @@ namespace TextRPG_8_Team
     interface IQuest
     {
         public abstract void Logic();
+        public abstract void Print();
+        public abstract void ChoiceResult();
     }
     internal abstract class Quest : IQuest
     {
-        protected bool isActivate = false;
+        public bool isActivate = false;
         protected bool IsCompleted = false;
+        public bool IsMoveClear = false;
+
 
         public string questName;
         protected string descriptionStart;
@@ -34,6 +38,73 @@ namespace TextRPG_8_Team
         }
 
         public abstract void Logic();
+        public void Print()
+        {
+            //활성화 O and 클리어 O and 클리어한 퀘스트 리스트로 이동 O
+            if (isActivate == true && (IsCompleted == true && IsMoveClear == true))
+            {
+                Console.WriteLine("이미 클리어한 퀘스트\n - LOG - \n" + descriptionStart + "\n" + descriptionEnd);
+                Console.WriteLine("나가시려면 아무키나 누르세요");
+                Console.ReadLine();
+            }
+            //활성화 O and 클리어 O 
+            else if (isActivate == true && IsCompleted == true) Console.WriteLine(descriptionEnd);
+            //활성화 X or 클리어 X 
+            else if (isActivate == false || IsCompleted == false) Console.WriteLine(descriptionStart);
+        }
+        public void ChoiceResult()
+        {
+            while (true)
+            {
+                //예외 처리
+                bool isNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+                if (!isNum || (choiceNum > 2 || choiceNum < 1))
+                {
+                    Console.WriteLine("잘못입력하셨습니다.");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                //이전 화면
+                if (choiceNum == 2)
+                {
+                    break;
+                }
+                //퀘스트 수락 X / 퀘스트 클리어 X 
+                else if (isActivate == false && IsCompleted == false)
+                {
+                    isActivate = true;
+                    Console.WriteLine("수락하셨습니다!\n잠시후에 넘어갑니다");
+                    GameManager.Instance.TotalThreadSleep();
+                    break;
+                }
+                //퀘스트 수락 O / 퀘스트 클리어 X 
+                else if (isActivate == true && IsCompleted == false)
+                {
+                    Console.WriteLine("이미 수락하셨습니다!\n잠시후에 넘어갑니다");
+                    GameManager.Instance.TotalThreadSleep();
+                    break;
+                }
+                //퀘스트 수락 O / 퀘스트 클리어 O => 보상 획득
+                else if (isActivate == true && IsCompleted == true)
+                {
+                    foreach (Item item in rewardItems)
+                    { 
+                        GameManager.Instance.player.Inventory.Add(item);
+                        Console.WriteLine($"{item.Name}을(를) 획득하셨습니다!");
+                    }
+                    if (rewardGold > 0)
+                    {
+                        GameManager.Instance.player.Gold += rewardGold;
+                        Console.WriteLine($"{rewardGold}g 를 획득하셨습니다!");
+                    }
+                    //클리어 퀘스트 리스트로 이동
+                    QuestManager.Instance.MoveClearList(this);
+                    Console.WriteLine("계속하시려면 아무키나 누르세요");
+                    Console.ReadLine();
+                    break;
+                }
+            }
+        }
         //protected string explanationStart = "퀘스트 설명을 적을 공간입니다.\n이게 보인다면 뭔가 잘 못 된겁니다";
         //protected string explanationClear = "퀘스트 클리어 설명을 적을 공간입니다.\n이게 보인다면 뭔가 잘 못 된겁니다";
         //protected List<Item> itemReward = new List<Item>();
@@ -130,12 +201,12 @@ namespace TextRPG_8_Team
 
     class KillMonster : Quest
     {
-        int MonsterCount = 0;
+        public int monsterCount = 0;
 
         //생성자
         public KillMonster() : base
             ("KillMonster",
-            @"
+            $@"
 Quest!!
 
 마을을 위협하는 미니언 처치
@@ -144,7 +215,7 @@ Quest!!
 마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!
 모험가인 자네가 좀 처치해주게!
 
-- 미니언 5마리 처치 (0/5)
+- 미니언 5마리 처치
 
 - 보상 -
     쓸만한 방패 x 1
@@ -159,9 +230,8 @@ Quest!!
 
 마을을 위협하는 미니언 처치
 
-이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?
-마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!
-모험가인 자네가 좀 처치해주게!
+고맙네 여기 내가 젊을 때 쓰던 방패라네
+쓸만하니 가지고 가게
 
 - 미니언 5마리 처치 Clear
 
@@ -179,13 +249,43 @@ Quest!!
 
         }
 
-        //몬스터 잡으면 수 늘려주기
+
         public override void Logic()
-        { 
-            if(this.isActivate == true && MonsterCount<5)
+        {
+
+        }
+
+        //몬스터 잡으면 1개씩 수 늘려주기
+        public void OnlyMonsterCount()
+        {
+            if ((isActivate == true && monsterCount < 5) && IsCompleted == false)
             {
-                this.MonsterCount++;
+                monsterCount++;
+
+                if (monsterCount >= 5)
+                {
+                    IsCompleted = true;
+                }
             }
+        }
+        //외부에서 몬스터 리스트를 받아서 죽인 몬스터 수만큼 퀘스트 몬스터 수 올리기
+        public void QuestMonsterKillCount(int count)
+        {
+            if ((isActivate == true)&&(IsCompleted == false))
+            {
+                //Console.SetCursorPosition(너비,높이); 맨위가 0
+                for (int i = 0; i > count; i++)
+                {
+                    OnlyMonsterCount();
+                }
+                if (monsterCount >= 5)
+                {
+                    monsterCount = 5;
+                    Console.WriteLine("KillMonster clear");
+                }
+            }
+            Console.WriteLine($"KillMonster debug {monsterCount}");
+            Console.ReadLine();
         }
     }
 
@@ -218,8 +318,7 @@ Quest!!
 
 장비를 장착해보세요!
 
-당신 지금 그 상태로 싸우려는거야?
-당장 장비를 입어!!!!
+그래그래 이게 맞지
 
 - 아무 장비나 착용 Clear
 
@@ -230,15 +329,22 @@ Quest!!
 2. 거절
 원하시는 행동을 입력해주세요.
 >>",
-            new List<Item> {},
+            new List<Item> { },
             5)
         {
 
         }
 
+        //플레이어가 장착한 장비가 있으면 클리어
         public override void Logic()
         {
-
+            if (isActivate == true)
+            {
+                if(GameManager.Instance.player.EquippedItems.Count>0)
+                {
+                    IsCompleted=true;
+                }
+            }
         }
     }
 
@@ -286,10 +392,15 @@ Quest!!
         {
 
         }
-
         public override void Logic()
         {
-
+            if (isActivate == true)
+            {
+                if (GameManager.Instance.player.TotalAttack > 100)
+                {
+                    IsCompleted = true;
+                }
+            }
         }
     }
 }
