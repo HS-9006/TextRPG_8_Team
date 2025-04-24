@@ -10,6 +10,7 @@ namespace TextRPG_8_Team
     {
         public static void ShowInventory()
         {
+            Console.Clear();
             Console.WriteLine("\n===== 인벤토리 =====");
 
             //player의 inventory에 있는 장비 개수 확인 없으면 비어있다고 출력
@@ -49,6 +50,7 @@ namespace TextRPG_8_Team
 
         static void ManageInventory()
         {
+            Console.Clear();
             Console.WriteLine("1) 아이템 장착");
             Console.WriteLine("2) 아이템 해제");
             Console.WriteLine("0) 돌아가기");
@@ -77,18 +79,28 @@ namespace TextRPG_8_Team
             if (GameManager.Instance.player.Inventory.Count == 0)
             {
                 Console.WriteLine("장착할 아이템이 없습니다.");
-                Thread.Sleep(500);
+                GameManager.Instance.TotalThreadSleep();
                 return;
             }
-            //인벤토리에 장비가 있으면 숫자와 함께 출력
-            Console.Write("장착할 아이템 번호를 입력하세요: ");
+            else
+            {
+                //인벤토리에 있다면 하나하나 출력함
+                Console.Clear();
+                for (int i = 0; i < GameManager.Instance.player.Inventory.Count; i++)
+                {
+                    var item = GameManager.Instance.player.Inventory[i];
+                    Console.WriteLine($"{i + 1}) {item.Name} (공격력 +{item.AttackBonus}, 방어력 +{item.DefenseBonus}, 최대체력 +{item.MaxHP})");
+                }
+            }
+                //인벤토리에 장비가 있으면 숫자와 함께 출력
+                Console.Write("장착할 아이템 번호를 입력하세요: ");
             if (int.TryParse(Console.ReadLine(), out int index))
             {
                 //유저가 입력한 게 0이거나 인벤토리 리스트보다 크다면 잘못됐다고 출력하고 되돌림
                 if (index < 1 || index > GameManager.Instance.player.Inventory.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
-                    Thread.Sleep(500);
+                    GameManager.Instance.TotalThreadSleep();
                     return;
                 }
                 //유저가 입력한 값 - 1 을 해야 리스트 순서에 맞출 수 있음
@@ -98,7 +110,7 @@ namespace TextRPG_8_Team
                 //인벤토리에서 개수 -1
                 GameManager.Instance.player.Inventory.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 장착했습니다.");
-                Thread.Sleep(500);
+                GameManager.Instance.TotalThreadSleep();
             }
             else
             {
@@ -111,6 +123,7 @@ namespace TextRPG_8_Team
             if (GameManager.Instance.player.EquippedItems.Count == 0)
             {
                 Console.WriteLine("해제할 아이템이 없습니다.");
+                GameManager.Instance.TotalThreadSleep();
                 return;
             }
 
@@ -126,7 +139,7 @@ namespace TextRPG_8_Team
                 if (index < 1 || index > GameManager.Instance.player.EquippedItems.Count)
                 {
                     Console.WriteLine("잘못된 번호입니다.");
-                    Thread.Sleep(500);
+                    GameManager.Instance.TotalThreadSleep();
                     return;
                 }
 
@@ -134,12 +147,12 @@ namespace TextRPG_8_Team
                 GameManager.Instance.player.Inventory.Add(item);
                 GameManager.Instance.player.EquippedItems.RemoveAt(index - 1);
                 Console.WriteLine($"{item.Name}을(를) 해제했습니다.");
-                Thread.Sleep(500);
+                GameManager.Instance.TotalThreadSleep();
             }
             else
             {
                 Console.WriteLine("숫자를 입력해주세요.");
-                Thread.Sleep(500);
+                GameManager.Instance.TotalThreadSleep();
             }
         }
     }
