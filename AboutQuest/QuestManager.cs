@@ -26,10 +26,21 @@ namespace TextRPG_8_Team
         public Guild Guild = new Guild();
 
         public List<Quest> QuestList = new List<Quest>();
-        
+        public List<Quest> QuestClaerList = new List<Quest>();
+
         public void AddQuest(Quest _quest)
         {
             QuestList.Add(_quest);
+        }
+
+        public void MoveClearList(Quest _quest)
+        {
+            QuestClaerList.Add(_quest);
+            QuestList.Remove(_quest);
+        }
+        public T SearchQuest<T>(string _questName) where T : Quest
+        {
+            return QuestManager.Instance.QuestList.FirstOrDefault(q => q.questName == _questName) as T;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TextRPG_8_Team
         public int Level = 1;
 
         // 기본 능력치
-        public int BaseAttack = 10;
+        public int BaseAttack = 200;
         public int BaseDefense = 5;
         public int MaxHP = 100;
         public int CurrentHP = 100;
