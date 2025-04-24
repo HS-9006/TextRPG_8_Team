@@ -14,31 +14,42 @@ namespace TextRPG_8_Team
 
         public void start()
         {
-            Console.WriteLine("전투시작");
-
-            // 1. 몬스터 생성
-            List<Monster> monster = RandomMonsters();
-
-            // 2. 몬스터 출력
-            for(int i = 0; i < monster.Count; i++)
+            List<Monster> monsters = RandomMonsters();
+            while (true)
             {
-                Monster m = monster[i];
-                Console.WriteLine($"{i + 1}. Lv {m.level}{m.name}(HP: {m.health})");
-            }
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                foreach (var monster in monsters) Console.WriteLine($"Lv.{monster.level} {monster.name} {monster.health}");
+                Console.WriteLine("\n[내 정보]");
+                Console.WriteLine($"Lv.{GameManager.Instance.player.Level} Chad{GameManager.Instance.player.Job}");
+                Console.WriteLine($"HP {GameManager.Instance.player.CurrentHP}/{GameManager.Instance.player.MaxHP}\n");
+                Console.WriteLine("1) 공격");
+                Console.WriteLine("0) 돌아가기\n");
+                Console.WriteLine("원하는 행동을 입력하세요.");
+                Console.WriteLine(">>");
 
-            // 3. 행동 선택
-            Console.WriteLine("1. 공격");
-            Console.WriteLine("원하는 행동을 입력하세요.");
-            string action = Console.ReadLine();
-
-            if (action == "1")
-            {
-                BattleManager battleManager = new BattleManager();
-                battleManager.Battle(monster);
-            }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다.");
+                bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
+                if (!isChoiceNum)
+                {
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(500);
+                    continue;
+                }
+                if (choiceNum == 1)
+                {
+                    BattleManager battleManager = new BattleManager();
+                    battleManager.Battle(monsters);
+                    break;
+                }
+                else if (choiceNum == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 입력입니다");
+                    Thread.Sleep(500);
+                }
             }
         }
 
@@ -54,7 +65,7 @@ namespace TextRPG_8_Team
 
             int count = rand.Next(1, 5);
 
-            for(int i = 0;i < count;i++)
+            for (int i = 0; i < count; i++)
             {
                 int idx = rand.Next(currentMonster.Count);
                 Monster selected = currentMonster[idx];
