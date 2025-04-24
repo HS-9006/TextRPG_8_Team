@@ -27,6 +27,7 @@ namespace TextRPG_8_Team
         public Player player = new Player();
         public StartPage startPage = new StartPage();
         public Guild guild = new Guild();
+        public StartBattle startBattle = new StartBattle();
 
         public void TotalThreadSleep()
         {
