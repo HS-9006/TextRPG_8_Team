@@ -25,7 +25,7 @@ namespace TextRPG_8_Team
 
                 Console.Clear();
                 Console.WriteLine("이제 전투를 시작할 수 있습니다.\n");
-                Console.WriteLine("1) 상태 보기\n2) 전투 시작\n3) 인벤토리\n4) 상점\n5) 여관\n6) 게임 종료\n");
+                Console.WriteLine("1) 상태 보기\n2) 전투 시작\n3) 인벤토리\n4) 상점\n5) 여관\n6) 길드\n7) 게임 종료\n");
 
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
@@ -64,6 +64,9 @@ namespace TextRPG_8_Team
                     case StartChoice.Shop:
                         Shop.OpenShop();
                         break;
+                    case StartChoice.Inn:
+                        Inn.VisitInn();
+                        break;
                     case StartChoice.Guild:
                         GameManager.Instance.guild.GulidQuest();
                         break;
@@ -82,6 +85,7 @@ namespace TextRPG_8_Team
             Battle,
             Inventory,
             Shop,
+            Inn,
             Guild,
             GameEnd
         }

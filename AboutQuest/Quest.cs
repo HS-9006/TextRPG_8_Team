@@ -274,18 +274,15 @@ Quest!!
             if ((isActivate == true)&&(IsCompleted == false))
             {
                 //Console.SetCursorPosition(너비,높이); 맨위가 0
-                for (int i = 0; i > count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     OnlyMonsterCount();
                 }
                 if (monsterCount >= 5)
                 {
                     monsterCount = 5;
-                    Console.WriteLine("KillMonster clear");
                 }
             }
-            Console.WriteLine($"KillMonster debug {monsterCount}");
-            Console.ReadLine();
         }
     }
 
