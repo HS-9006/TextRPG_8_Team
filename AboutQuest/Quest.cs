@@ -16,8 +16,8 @@ namespace TextRPG_8_Team
     internal abstract class Quest : IQuest
     {
         public bool isActivate = false;
-        protected bool IsCompleted = false;
-        public bool IsMoveClear = false;
+        protected bool isCompleted = false;
+        public bool isMoveClear = false;
 
 
         public string questName;
@@ -41,16 +41,16 @@ namespace TextRPG_8_Team
         public void Print()
         {
             //활성화 O and 클리어 O and 클리어한 퀘스트 리스트로 이동 O
-            if (isActivate == true && (IsCompleted == true && IsMoveClear == true))
+            if (isActivate == true && (isCompleted == true && isMoveClear == true))
             {
                 Console.WriteLine("이미 클리어한 퀘스트\n - LOG - \n" + descriptionStart + "\n" + descriptionEnd);
                 Console.WriteLine("나가시려면 아무키나 누르세요");
                 Console.ReadLine();
             }
             //활성화 O and 클리어 O 
-            else if (isActivate == true && IsCompleted == true) Console.WriteLine(descriptionEnd);
+            else if (isActivate == true && isCompleted == true) Console.WriteLine(descriptionEnd);
             //활성화 X or 클리어 X 
-            else if (isActivate == false || IsCompleted == false) Console.WriteLine(descriptionStart);
+            else if (isActivate == false || isCompleted == false) Console.WriteLine(descriptionStart);
         }
         public void ChoiceResult()
         {
@@ -70,7 +70,7 @@ namespace TextRPG_8_Team
                     break;
                 }
                 //퀘스트 수락 X / 퀘스트 클리어 X 
-                else if (isActivate == false && IsCompleted == false)
+                else if (isActivate == false && isCompleted == false)
                 {
                     isActivate = true;
                     Console.WriteLine("수락하셨습니다!\n잠시후에 넘어갑니다");
@@ -78,14 +78,14 @@ namespace TextRPG_8_Team
                     break;
                 }
                 //퀘스트 수락 O / 퀘스트 클리어 X 
-                else if (isActivate == true && IsCompleted == false)
+                else if (isActivate == true && isCompleted == false)
                 {
                     Console.WriteLine("이미 수락하셨습니다!\n잠시후에 넘어갑니다");
                     GameManager.Instance.TotalThreadSleep();
                     break;
                 }
                 //퀘스트 수락 O / 퀘스트 클리어 O => 보상 획득
-                else if (isActivate == true && IsCompleted == true)
+                else if (isActivate == true && isCompleted == true)
                 {
                     foreach (Item item in rewardItems)
                     { 
@@ -258,20 +258,20 @@ Quest!!
         //몬스터 잡으면 1개씩 수 늘려주기
         public void OnlyMonsterCount()
         {
-            if ((isActivate == true && monsterCount < 5) && IsCompleted == false)
+            if ((isActivate == true && monsterCount < 5) && isCompleted == false)
             {
                 monsterCount++;
 
                 if (monsterCount >= 5)
                 {
-                    IsCompleted = true;
+                    isCompleted = true;
                 }
             }
         }
         //외부에서 몬스터 리스트를 받아서 죽인 몬스터 수만큼 퀘스트 몬스터 수 올리기
         public void QuestMonsterKillCount(int count)
         {
-            if ((isActivate == true)&&(IsCompleted == false))
+            if ((isActivate == true)&&(isCompleted == false))
             {
                 //Console.SetCursorPosition(너비,높이); 맨위가 0
                 for (int i = 0; i < count; i++)
@@ -339,7 +339,7 @@ Quest!!
             {
                 if(GameManager.Instance.player.EquippedItems.Count>0)
                 {
-                    IsCompleted=true;
+                    isCompleted=true;
                 }
             }
         }
@@ -395,7 +395,7 @@ Quest!!
             {
                 if (GameManager.Instance.player.TotalAttack > 100)
                 {
-                    IsCompleted = true;
+                    isCompleted = true;
                 }
             }
         }
