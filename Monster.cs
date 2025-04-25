@@ -57,4 +57,18 @@ namespace TextRPG_8_Team
 
         }
     }
+    public class BossSCS : Monster
+    {
+        public BossSCS()
+        {
+            name = "정상화의 신 신창섭";
+            level = 1300;
+            health = 350000000;
+            attack = 70;
+            def = 40;
+            speed = 80;
+            exp = 999999999;
+            gold = 999999999;
+        }
+    }
 }

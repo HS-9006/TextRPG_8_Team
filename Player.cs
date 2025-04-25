@@ -25,7 +25,9 @@ namespace TextRPG_8_Team
         public int BaseDefense = 5;
         public int MaxHP = 100;
         public int CurrentHP = 100;
-        public int Gold = 1500000;
+        public int Gold = 15000;
+        public int Exp = 0;
+        public int MaxExp => Level * 20;
 
         //아이템 장착으로 변한 능력치
         public int BonusAttack => EquippedItems.Sum(item => item.AttackBonus);
@@ -68,6 +70,7 @@ namespace TextRPG_8_Team
             Console.WriteLine($"이름: {GameManager.Instance.player.Name}");
             Console.WriteLine($"직업: {GameManager.Instance.player.Job}");
             Console.WriteLine($"레벨: {GameManager.Instance.player.Level}");
+            Console.WriteLine($"경험치: {GameManager.Instance.player.Exp} / {GameManager.Instance.player.MaxExp}");
 
             Console.WriteLine($"공격력: {GameManager.Instance.player.BaseAttack} (+{GameManager.Instance.player.BonusAttack}) => {GameManager.Instance.player.TotalAttack}");
             Console.WriteLine($"방어력: {GameManager.Instance.player.BaseDefense} (+{GameManager.Instance.player.BonusDefense}) => {GameManager.Instance.player.TotalDefense}");
@@ -96,6 +99,29 @@ namespace TextRPG_8_Team
                 Console.WriteLine("잘못된 입력입니다.");
                 continue;
             }
+        }
+        public void GainExp(int amount)
+        {
+            Exp += amount;
+            while (Exp >= MaxExp)
+            {
+                Exp -= MaxExp;
+                Level++;
+                LevelUp();
+            }
+        }
+        
+        private void LevelUp()
+        {
+            BaseAttack += 2;
+            BaseDefense += 1;
+            MaxHP += 10;
+            CurrentHP = TotalMaxHP;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n[레벨업!] Lv.{Level} 달성!");
+            Console.WriteLine($"공격력 +2, 방어력 +1, 체력 + 10 증가");
+            Console.ResetColor();
         }
     }
 }
