@@ -25,7 +25,7 @@ namespace TextRPG_8_Team
         public int BaseDefense = 5;
         public int MaxHP = 100;
         public int CurrentHP = 100;
-        public int Gold = 1500;
+        public int Gold = 1500000;
 
         //아이템 장착으로 변한 능력치
         public int BonusAttack => EquippedItems.Sum(item => item.AttackBonus);

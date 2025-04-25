@@ -16,8 +16,6 @@ namespace TextRPG_8_Team
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result");
                 Console.WriteLine("\n");
-                 
-                
 
                 if (isWin)
                 {
