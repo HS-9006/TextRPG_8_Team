@@ -9,6 +9,7 @@ namespace TextRPG_8_Team
     public class Item
     {
         public string Name { get; set; }
+        public ItemType type {get; set;}
         public int AttackBonus { get; set; }
         public int DefenseBonus { get; set; }
         public int MaxHP { get; set; }
@@ -19,9 +20,10 @@ namespace TextRPG_8_Team
         public Item() { }
 
 
-        public Item(string name, int atk, int def, int HP, int price)
+        public Item(string name, ItemType type, int atk, int def, int HP, int price)
         {
             Name = name;
+            this.type = type;
             AttackBonus = atk;
             DefenseBonus = def;
             MaxHP = HP;
@@ -32,4 +34,10 @@ namespace TextRPG_8_Team
             return $"{Name} (공격력 +{AttackBonus}, 방어력 +{DefenseBonus}, 최대체력 +{MaxHP}, 가격: {Price}G)";
         }
     }
+}
+
+public enum ItemType
+{
+    Weapon = 1,
+    Armor
 }

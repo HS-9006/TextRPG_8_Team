@@ -243,7 +243,7 @@ Quest!!
 2. 거절
 원하시는 행동을 입력해주세요.
 >>",
-            new List<Item> { new Item("쓸만한 방패", 0, 10, 0, 10) },
+            new List<Item> { new Item("쓸만한 방패", ItemType.Armor, 0, 10, 0, 10) },
             5)
         {
 
@@ -384,7 +384,7 @@ Quest!!
 2. 거절
 원하시는 행동을 입력해주세요.
 >>",
-            new List<Item> { new Item("격이 다른 검", 100, 0, 0, 0) },
+            new List<Item> { new Item("격이 다른 검", ItemType.Weapon, 100, 0, 0, 0) },
             5)
         {
 

@@ -12,14 +12,14 @@ namespace TextRPG_8_Team
         //밸런스 공격력, 방어력 1 당 100, 최대체력 10당 200
         static List<Item> shopItems = new List<Item>
         {
-                new Item("철검", 10, 0, 0, 1000),
-                new Item("갑옷", 0, 10, 10, 1200),
-                new Item("지팡이", 15, -2, 0, 1300),
-                new Item("도적의 방패", 2, 10, 20 , 1600),
-                new Item("전사의 방패", 10, 5, 20 , 1900),
-                new Item("마법사의 지팡이", 20, 0, 10 , 2100),
-                new Item("뒤틀린 황천의 바주카포", 300, 0, 0, 3000),
-                new Item("무한의 대검", 99999, 99999, 99999, 5000)
+            new Item("철검", ItemType.Weapon, 10, 0, 0, 1000),
+            new Item("갑옷", ItemType.Armor, 0, 10, 10, 1200),
+            new Item("지팡이", ItemType.Weapon, 15, -2, 0, 1300),
+            new Item("도적의 방패", ItemType.Armor, 2, 10, 20, 1600),
+            new Item("전사의 방패", ItemType.Armor, 10, 5, 20, 1900),
+            new Item("마법사의 지팡이", ItemType.Weapon, 20, 0, 10, 2100),
+            new Item("뒤틀린 황천의 바주카포", ItemType.Weapon, 300, 0, 0, 3000),
+            new Item("무한의 대검", ItemType.Weapon, 99999, 99999, 99999, 5000)
         };
 
         public static void OpenShop()
