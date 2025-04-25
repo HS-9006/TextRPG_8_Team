@@ -248,8 +248,6 @@ Quest!!
         {
 
         }
-
-
         public override void Logic()
         {
 
@@ -268,6 +266,7 @@ Quest!!
                 }
             }
         }
+
         //외부에서 몬스터 리스트를 받아서 죽인 몬스터 수만큼 퀘스트 몬스터 수 올리기
         public void QuestMonsterKillCount(int count)
         {
@@ -288,8 +287,6 @@ Quest!!
 
     class Equipped : Quest
     {
-        int MonsterCount = 0;
-
         //생성자
         public Equipped() : base
             ("Equipped",
@@ -347,8 +344,6 @@ Quest!!
 
     class AttackPower100 : Quest
     {
-        int MonsterCount = 0;
-
         //생성자
         public AttackPower100() : base
             ("AttackPower100",
