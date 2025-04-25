@@ -23,7 +23,7 @@ namespace TextRPG_8_Team
         }
         private QuestManager() { }
 
-        public Guild Guild = new Guild();
+        public Guild Guild = GameManager.Instance.guild;
 
         public List<Quest> QuestList = new List<Quest>();
         public List<Quest> QuestClaerList = new List<Quest>();
