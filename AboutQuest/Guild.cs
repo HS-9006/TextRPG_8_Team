@@ -38,7 +38,7 @@ namespace TextRPG_8_Team
                 bool isNum = int.TryParse(Console.ReadLine(), out int choiceNum);
                 if (!isNum || (choiceNum > QuestManager.Instance.QuestList.Count || choiceNum < 0))
                 {
-                    Console.WriteLine("잘못입력하셨습니다.");
+                    Console.WriteLine("잘못입력하셨습니다.\n잠시후 넘어갑니다.");
                     Thread.Sleep(500);
                     continue;
                 }
