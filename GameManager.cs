@@ -33,10 +33,5 @@ namespace TextRPG_8_Team
         {
             Thread.Sleep(1000);
         }
-
-        public void GameStart()
-        {
-            startPage.StartGame();
-        }
     }
 }

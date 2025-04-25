@@ -5,7 +5,7 @@
         
         static void Main(string[] args)
         {
-            GameManager.Instance.GameStart();
+            GameManager.Instance.startPage.StartGame();
         }
     }
 }
