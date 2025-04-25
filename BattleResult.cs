@@ -66,6 +66,11 @@ namespace TextRPG_8_Team
         }
         public static void BattleResultInit(List<Monster> monsters)
         {
+            int totalExp = monsters.Where(m => !m.isAlive).Sum(m => m.exp);
+            GameManager.Instance.player.GainExp(totalExp);
+
+            Console.WriteLine($"\n획득한 경험치: {totalExp} EXP");
+            Console.WriteLine($"현재 경험치: {GameManager.Instance.player.Exp} / {GameManager.Instance.player.MaxExp}");
             //몬스터 5마리 잡는 퀘스트
             int totalKill = monsters.Where(m => !m.isAlive).Count();
             QuestManager.Instance.SearchQuest<KillMonster>("KillMonster").QuestMonsterKillCount(totalKill);

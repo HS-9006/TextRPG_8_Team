@@ -75,6 +75,10 @@ namespace TextRPG_8_Team
                     case StartChoice.Guild:
                         GameManager.Instance.guild.GulidQuest();
                         break;
+                    case StartChoice.SaveMenu:
+                        SaveSystem.ShowSaveMenu();
+                        break;
+
                     case StartChoice.GameEnd:
                         isGameEnd = true;
                         break;
@@ -92,6 +96,7 @@ namespace TextRPG_8_Team
             Shop,
             Inn,
             Guild,
+            SaveMenu,
             GameEnd
         }
 

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace TextRPG_8_Team
 {
@@ -16,31 +19,42 @@ namespace TextRPG_8_Team
 
     public class Player
     {
-        public string Name;
-        public JobType Job = JobType.Warrior;
-        public int Level = 1;
+        public string Name { get; set; }
+        public JobType Job { get; set; }
+        public int Level { get; set; } = 1;
 
         // 기본 능력치
-        public int BaseAttack = 15;
-        public int BaseDefense = 5;
-        public int MaxHP = 100;
-        public int CurrentHP = 100;
-        public int Gold = 15000;
+        public int BaseAttack { get; set; } = 15;
+        public int BaseDefense { get; set; } = 5;
+        public int MaxHP { get; set; } = 100;
+        public int CurrentHP { get; set; } = 100;
+        public int Gold { get; set; } = 15000;
         public int Exp = 0;
         public int MaxExp => Level * 20;
 
         //아이템 장착으로 변한 능력치
+        [JsonIgnore]
         public int BonusAttack => EquippedItems.Sum(item => item.AttackBonus);
+        [JsonIgnore]
+
         public int BonusDefense => EquippedItems.Sum(item => item.DefenseBonus);
+        [JsonIgnore]
+
         public int BonusMaxHP => EquippedItems.Sum(item => item.MaxHP);
 
         //최종 능력치
+        [JsonIgnore]
+
         public int TotalAttack => BaseAttack + BonusAttack;
+        [JsonIgnore]
+
         public int TotalDefense => BaseDefense + BonusDefense;
+        [JsonIgnore]
+
         public int TotalMaxHP => MaxHP + BonusMaxHP;
 
-        public List<Item> Inventory = new List<Item>();
-        public List<Item> EquippedItems = new List<Item>();
+        public List<Item> Inventory { get; set; } = new();
+        public List<Item> EquippedItems { get; set; } = new();
 
         //직업에 따라 능력치 조절해주기 전사가 기본 스텟이니까 도적과 마법사만 조절
         //밸런스 공격력 1당 최대체력 -5, 방여력 -0.5(내림)
