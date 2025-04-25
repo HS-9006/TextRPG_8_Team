@@ -122,9 +122,9 @@ namespace TextRPG_8_Team
                 Console.Clear();
                 //캐릭터 이름 정하고 직업 설정
                 Console.WriteLine("\n직업을 선택하세요:");
-                Console.WriteLine("1) 전사 (밸런스 있는 능력치)");
-                Console.WriteLine("2) 도적 (강력하지만 낮은 체력)");
-                Console.WriteLine("3) 마법사 (매우 강력하지만 허약한 체력)");
+                Console.WriteLine("1) Warrior (밸런스 있는 능력치)");
+                Console.WriteLine("2) Thief (강력하지만 낮은 체력)");
+                Console.WriteLine("3) Mage (매우 강력하지만 허약한 체력)");
 
                 while (true)
                 {
