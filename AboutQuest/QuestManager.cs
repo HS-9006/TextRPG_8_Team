@@ -28,11 +28,6 @@ namespace TextRPG_8_Team
         public List<Quest> QuestList = new List<Quest>();
         public List<Quest> QuestClaerList = new List<Quest>();
 
-        public void AddQuest(Quest _quest)
-        {
-            QuestList.Add(_quest);
-        }
-
         public void MoveClearList(Quest _quest)
         {
             _quest.isMoveClear = true;
