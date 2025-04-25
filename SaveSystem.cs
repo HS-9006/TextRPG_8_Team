@@ -8,7 +8,7 @@ public static class SaveSystem
 	private static readonly string SaveFolder = Path.Combine(Directory.GetCurrentDirectory(), "save");
 	private static readonly string SaveFilePath = Path.Combine(SaveFolder, "player_save.json");
 
-	public static void Save(Player player)
+	public static void Save(Player player)	//세이브 저장
 	{
 		if (!Directory.Exists(SaveFolder))
 			Directory.CreateDirectory(SaveFolder);
@@ -18,7 +18,7 @@ public static class SaveSystem
 		Console.WriteLine("저장 완료됨.");
 	}
 
-	public static void Load()
+	public static void Load()	//세이브 불러오기
 	{
 		if (!File.Exists(SaveFilePath))
 		{
@@ -43,7 +43,7 @@ public static class SaveSystem
 
 		Console.WriteLine("불러오기 완료!");
 	}
-	public static void DeleteSave()
+	public static void DeleteSave()	//세이브 삭제
 	{
 		if(File.Exists(SaveFilePath))
 		{
