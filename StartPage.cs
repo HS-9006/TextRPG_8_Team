@@ -150,9 +150,7 @@ namespace TextRPG_8_Team
                 GameManager.Instance.TotalThreadSleep();
                 break;
             }
-        }
-
-            
+        } 
 
         public void Init()
         {
