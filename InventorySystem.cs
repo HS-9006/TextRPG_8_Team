@@ -116,6 +116,8 @@ namespace TextRPG_8_Team
                 if (equipped != null)
                 {
                     GameManager.Instance.player.EquippedItems.Remove(equipped);
+                    GameManager.Instance.player.Inventory.Add(equipped);
+                    GameManager.Instance.player.Inventory.Remove(item);
                     GameManager.Instance.player.EquippedItems.Add(item);
                     Console.WriteLine($"\n{item.Name}을(를) 장착했습니다.");
                     GameManager.Instance.TotalThreadSleep();
