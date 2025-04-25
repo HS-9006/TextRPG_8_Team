@@ -13,6 +13,7 @@ namespace TextRPG_8_Team
 
         public static void VisitInn()
         {
+            Console.Clear();
             Console.WriteLine("\n===== 여관 =====");
             Console.WriteLine($"체력을 회복하시겠습니까? ({InnHealCost} Gold 소모)");
             Console.WriteLine($"현재 체력: {GameManager.Instance.player.CurrentHP} / {GameManager.Instance.player.TotalMaxHP}");

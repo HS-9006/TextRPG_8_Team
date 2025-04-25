@@ -32,7 +32,7 @@ namespace TextRPG_8_Team
                     Console.WriteLine(count + " . " + quest.questName);
                     count++;
                 }
-                Console.Write("0.나가기\n원하시는 행동을 선택해주세요.\n>>");
+                Console.Write("\n0 . 나가기\n\n원하시는 행동을 선택해주세요.\n>>");
 
                 //예외 처리
                 bool isNum = int.TryParse(Console.ReadLine(), out int choiceNum);

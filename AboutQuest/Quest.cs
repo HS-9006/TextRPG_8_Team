@@ -40,6 +40,7 @@ namespace TextRPG_8_Team
         public abstract void Logic();
         public void Print()
         {
+            Console.Clear();
             //활성화 O and 클리어 O and 클리어한 퀘스트 리스트로 이동 O
             if (isActivate == true && (isCompleted == true && isMoveClear == true))
             {

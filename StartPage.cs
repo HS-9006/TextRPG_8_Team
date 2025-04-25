@@ -33,7 +33,7 @@ namespace TextRPG_8_Team
                     Console.WriteLine((int)num+") "+ num);
                 }
 
-                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.WriteLine("\n원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
 
                 bool isChoiceNum = int.TryParse(Console.ReadLine(), out int choiceNum);
